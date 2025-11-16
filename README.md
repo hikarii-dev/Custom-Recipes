@@ -13,8 +13,7 @@ Integrates with other plugins:
 
 In addition, you can switch vanilla recipes at your discretion, as well as disable and override them (In Future)
 
-For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T).
-
+For any questions or support join the 
 ---
 
 ## Features
