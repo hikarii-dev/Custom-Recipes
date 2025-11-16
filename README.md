@@ -1,11 +1,11 @@
-# CustomRecipes
+# Custom Recipes
 
 ![bStats Servers](https://img.shields.io/bstats/servers/27998?refresh=true)
 ![bStats Players](https://img.shields.io/bstats/players/27998?refresh=true)
 ![Spiget Downloads](https://img.shields.io/spiget/downloads/130198?refresh=true)
 ![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21+-green)
 
-CustomRecipes allows you to create custom recipes for wide selection of workstations including:
+Custom Recipes allows you to create custom recipes for wide selection of workstations including:
 Crafting Table (Others in Future Updates)
 
 Integrates with other plugins:
