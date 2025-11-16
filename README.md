@@ -13,7 +13,9 @@ Integrates with other plugins:
 
 In addition, you can switch vanilla recipes at your discretion, as well as disable and override them (In Future)
 
-For any questions or support join the 
+For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T)
+
+![Discord](https://img.shields.io/discord/1381214323220938924?color=5865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge&v=2)
 ---
 
 ## Features
