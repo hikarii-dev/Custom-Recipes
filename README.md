@@ -2,7 +2,7 @@
 
 ![bStats Servers](https://img.shields.io/bstats/servers/27998)
 ![bStats Players](https://img.shields.io/bstats/players/27998)
-![Spiget Downloads](https://img.shields.io/spiget/downloads/130198?refresh=true)
+
 ![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21+-green?style=flat-square)
 
 CustomRecipes allows you to create custom recipes for wide selection of workstations including:
