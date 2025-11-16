@@ -4,7 +4,7 @@
   <groupId>org.hikarii</groupId>
   <artifactId>customrecipes</artifactId>
   <name>CustomRecipes</name>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <description>Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option</description>
   <build>
     <defaultGoal>clean package</defaultGoal>
@@ -14,7 +14,7 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
-    <finalName>CustomRecipes-1.0.0</finalName>
+    <finalName>CustomRecipes-1.1.0</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

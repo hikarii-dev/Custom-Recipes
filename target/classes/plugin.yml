@@ -1,5 +1,5 @@
 name: CustomRecipes
-version: '1.0.0'
+version: '1.1.0'
 main: org.hikarii.customrecipes.CustomRecipes
 api-version: '1.21'
 author: hikarii
@@ -46,4 +46,8 @@ permissions:
 
   customrecipes.manage:
     description: Allows enabling, disabling, and deleting recipes
+    default: op
+
+  customrecipes.update.notify:
+    description: Receive update notifications on join
     default: op
