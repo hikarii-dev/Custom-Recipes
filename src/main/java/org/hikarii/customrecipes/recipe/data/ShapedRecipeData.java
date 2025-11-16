@@ -1,5 +1,6 @@
 package org.hikarii.customrecipes.recipe.data;
 
+import org.hikarii.customrecipes.config.ValidationException;
 import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,24 +43,39 @@ public record ShapedRecipeData(List<RecipeIngredient> ingredients) {
      * @return array of 3 strings representing the shape
      */
     public String[] toShapeArray() {
-        Map<Material, Character> materialToChar = new HashMap<>();
-        char currentChar = 'A';
+        // Find bounds to create minimal pattern
+        int minRow = 3, maxRow = -1, minCol = 3, maxCol = -1;
 
-        // Build material to character mapping
-        for (RecipeIngredient ingredient : ingredients) {
-            Material material = ingredient.material();
-            if (!materialToChar.containsKey(material)) {
-                materialToChar.put(material, currentChar++);
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                RecipeIngredient ingredient = ingredients.get(row * 3 + col);
+                if (ingredient.material() != Material.AIR) {
+                    if (row < minRow) minRow = row;
+                    if (row > maxRow) maxRow = row;
+                    if (col < minCol) minCol = col;
+                    if (col > maxCol) maxCol = col;
+                }
             }
         }
 
-        // Build shape strings
-        String[] shape = new String[3];
-        for (int row = 0; row < 3; row++) {
+        // If no items, return single row with one space
+        if (minRow > maxRow) {
+            return new String[]{" "};
+        }
+
+        int height = maxRow - minRow + 1;
+        int width = maxCol - minCol + 1;
+        String[] shape = new String[height];
+
+        for (int row = 0; row < height; row++) {
             StringBuilder rowBuilder = new StringBuilder();
-            for (int col = 0; col < 3; col++) {
-                Material material = getIngredient(row, col).material();
-                rowBuilder.append(materialToChar.get(material));
+            for (int col = 0; col < width; col++) {
+                RecipeIngredient ingredient = ingredients.get((minRow + row) * 3 + (minCol + col));
+                if (ingredient.material() == Material.AIR) {
+                    rowBuilder.append(' '); // SPACE for empty
+                } else {
+                    rowBuilder.append(getCharForMaterial(ingredient.material()));
+                }
             }
             shape[row] = rowBuilder.toString();
         }
@@ -79,6 +95,9 @@ public record ShapedRecipeData(List<RecipeIngredient> ingredients) {
 
         for (RecipeIngredient ingredient : ingredients) {
             Material material = ingredient.material();
+            if (material == Material.AIR) {
+                continue;
+            }
             if (!materialToChar.containsKey(material)) {
                 materialToChar.put(material, currentChar);
                 charToMaterial.put(currentChar, material);
@@ -87,6 +106,31 @@ public record ShapedRecipeData(List<RecipeIngredient> ingredients) {
         }
 
         return charToMaterial;
+    }
+
+    /**
+     * Gets character for a material (or space for AIR)
+     */
+    private char getCharForMaterial(Material material) {
+        if (material == Material.AIR) {
+            return ' ';
+        }
+
+        Map<Material, Character> materialToChar = new HashMap<>();
+        char currentChar = 'A';
+
+        for (RecipeIngredient ingredient : ingredients) {
+            Material mat = ingredient.material();
+            if (mat == Material.AIR) {
+                continue;
+            }
+            if (!materialToChar.containsKey(mat)) {
+                materialToChar.put(mat, currentChar);
+                currentChar++;
+            }
+        }
+
+        return materialToChar.getOrDefault(material, ' ');
     }
 
     /**
@@ -122,6 +166,53 @@ public record ShapedRecipeData(List<RecipeIngredient> ingredients) {
                     );
                 }
             }
+        }
+
+        return new ShapedRecipeData(ingredients);
+    }
+
+    /**
+     * Creates ShapedRecipeData from a pattern array
+     *
+     * @param pattern array of 3 strings representing rows
+     * @return new ShapedRecipeData instance
+     * @throws ValidationException if pattern is invalid
+     */
+    public static ShapedRecipeData fromPattern(String[] pattern) throws ValidationException {
+        if (pattern == null || pattern.length == 0) {
+            throw new ValidationException("Pattern cannot be empty");
+        }
+
+        if (pattern.length > 3) {
+            throw new ValidationException("Pattern cannot have more than 3 rows");
+        }
+
+        // Parse pattern into RecipeIngredient list
+        List<RecipeIngredient> ingredients = new ArrayList<>();
+
+        for (String row : pattern) {
+            if (row == null || row.trim().isEmpty()) {
+                row = "AIR AIR AIR";
+            }
+
+            String[] items = row.split(" ");
+
+            // Pad row to 3 items if needed
+            int itemCount = Math.min(items.length, 3);
+            for (int i = 0; i < 3; i++) {
+                String itemName = i < itemCount ? items[i] : "AIR";
+
+                Material material = Material.getMaterial(itemName.toUpperCase());
+                if (material == null) {
+                    throw new ValidationException("Invalid material: " + itemName);
+                }
+                ingredients.add(new RecipeIngredient(material));
+            }
+        }
+
+        // Pad to 3 rows if needed
+        while (ingredients.size() < 9) {
+            ingredients.add(new RecipeIngredient(Material.AIR));
         }
 
         return new ShapedRecipeData(ingredients);

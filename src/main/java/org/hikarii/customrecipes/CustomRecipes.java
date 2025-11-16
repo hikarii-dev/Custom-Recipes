@@ -4,61 +4,59 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.hikarii.customrecipes.command.CustomRecipesCommand;
 import org.hikarii.customrecipes.config.ConfigManager;
 import org.hikarii.customrecipes.listener.RecipeDiscoverListener;
+import org.hikarii.customrecipes.listener.RecipeHidingListener;
+import org.hikarii.customrecipes.recipe.RecipeDataManager;
 import org.hikarii.customrecipes.recipe.RecipeManager;
+import org.hikarii.customrecipes.update.UpdateChecker;
+import org.hikarii.customrecipes.update.UpdateNotifier;
+import org.hikarii.customrecipes.update.UpdateSource;
 import org.hikarii.customrecipes.util.MessageUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
 
 /**
- * CustomRecipes - Advanced recipe management plugin
+ * Custom Recipes - Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option
  *
  * @author hikarii
- * @version 1.0.0
+ * @version 1.1.0
  */
 public final class CustomRecipes extends JavaPlugin {
-
     private static CustomRecipes instance;
     private ConfigManager configManager;
     private RecipeManager recipeManager;
     private boolean debugMode = false;
     private boolean keepSpawnEggNames = false;
     private boolean useCraftedCustomNames = true;
+    private UpdateChecker updateChecker;
+    private RecipeDataManager recipeDataManager;
 
     @Override
     public void onEnable() {
         instance = this;
-
-        // Save default config if not exists
         saveDefaultConfig();
-
-        // Initialize managers
         this.configManager = new ConfigManager(this);
         this.recipeManager = new RecipeManager(this);
+        this.recipeDataManager = new RecipeDataManager(this);
 
-        // Load configuration and recipes
         if (!loadConfiguration()) {
             getLogger().severe("Failed to load configuration! Plugin will be disabled.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        // Register commands
         registerCommands();
-
-        // Register listeners
         registerListeners();
 
         getLogger().info("CustomRecipes has been enabled!");
         getLogger().info("Loaded " + recipeManager.getRecipeCount() + " custom recipes");
 
-        // Initialize bStats
         initializeMetrics();
+        initializeUpdateChecker();
     }
 
     @Override
     public void onDisable() {
-        // Unregister all custom recipes
         if (recipeManager != null) {
             recipeManager.unregisterAll();
         }
@@ -73,22 +71,12 @@ public final class CustomRecipes extends JavaPlugin {
      */
     public boolean loadConfiguration() {
         try {
-            // Reload config from disk
             reloadConfig();
-
-            // Load debug mode
             debugMode = getConfig().getBoolean("debug", false);
-
-            // Load crafted item customization settings
             useCraftedCustomNames = getConfig().getBoolean("use-crafted-custom-names", true);
             keepSpawnEggNames = getConfig().getBoolean("spawn-egg-keep-custom-name", false);
-
-            // Load recipes from config
             configManager.loadRecipes();
-
-            // Register recipes with server
             recipeManager.registerAllRecipes();
-
             return true;
         } catch (Exception e) {
             getLogger().severe("Error loading configuration: " + e.getMessage());
@@ -114,6 +102,10 @@ public final class CustomRecipes extends JavaPlugin {
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(
                 new RecipeDiscoverListener(this), this
+        );
+
+        getServer().getPluginManager().registerEvents(
+                new RecipeHidingListener(this), this
         );
     }
 
@@ -143,6 +135,10 @@ public final class CustomRecipes extends JavaPlugin {
         return useCraftedCustomNames;
     }
 
+    public RecipeDataManager getRecipeDataManager() {
+        return recipeDataManager;
+    }
+
     public void setDebugMode(boolean debugMode) {
         this.debugMode = debugMode;
         getConfig().set("debug", debugMode);
@@ -167,21 +163,45 @@ public final class CustomRecipes extends JavaPlugin {
         int pluginId = 27998;
         Metrics metrics = new Metrics(this, pluginId);
 
-        // Add custom chart: Total recipes
+        // Total recipes
         metrics.addCustomChart(new SingleLineChart("total_recipes", () -> recipeManager.getRecipeCount()));
 
-        // Add custom chart: Enabled recipes
+        // Enabled recipes
         metrics.addCustomChart(new SingleLineChart("enabled_recipes", () -> {
             return (int) recipeManager.getAllRecipes().stream()
                     .filter(recipe -> recipeManager.isRecipeEnabled(recipe.getKey()))
                     .count();
         }));
 
-        // Add custom chart: Using custom names
+        // Using custom names
         metrics.addCustomChart(new SimplePie("using_custom_names", () ->
                 useCraftedCustomNames ? "Yes" : "No"
         ));
 
         debug("bStats metrics initialized");
+    }
+
+    /**
+     * Initializes Updates
+     */
+    private void initializeUpdateChecker() {
+        boolean enabled = getConfig().getBoolean("update-checker.enabled", true);
+        if (!enabled) {
+            return;
+        }
+
+        String sourceStr = getConfig().getString("update-checker.source", "GITHUB");
+        UpdateSource source = UpdateSource.valueOf(sourceStr.toUpperCase());
+
+        String spigotId = getConfig().getString("update-checker.spigot-resource-id", "");
+        String githubRepo = getConfig().getString("update-checker.github-repo", "");
+
+        updateChecker = new UpdateChecker(this, source, spigotId, githubRepo);
+        updateChecker.checkForUpdates();
+
+        // Register notifier
+        getServer().getPluginManager().registerEvents(new UpdateNotifier(this, updateChecker), this);
+
+        debug("Update checker initialized with source: " + source);
     }
 }

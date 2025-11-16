@@ -33,14 +33,12 @@ public class SettingsGUI implements Listener {
         this.player = player;
         this.inventory = Bukkit.createInventory(
                 null,
-                27, // 3 rows
+                54,
                 Component.text("Settings", NamedTextColor.DARK_PURPLE)
                         .decoration(TextDecoration.ITALIC, false)
         );
 
-        // Register as listener
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-
         updateInventory();
     }
 
@@ -56,15 +54,9 @@ public class SettingsGUI implements Listener {
      */
     private void updateInventory() {
         inventory.clear();
-
-        // Fill borders
         fillBorders();
-
-        // Add settings items
         addSpawnEggNameSetting();
         addCraftedNamesSetting();
-
-        // Add back button
         addBackButton();
     }
 
@@ -72,20 +64,15 @@ public class SettingsGUI implements Listener {
      * Fills the borders with decorative glass panes
      */
     private void fillBorders() {
-        ItemStack borderPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemStack borderPane = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
         ItemMeta meta = borderPane.getItemMeta();
         meta.displayName(Component.empty());
         borderPane.setItemMeta(meta);
 
-        // Top and bottom rows
-        for (int i = 0; i < 9; i++) {
+        // Fill all slots
+        for (int i = 0; i < 54; i++) {
             inventory.setItem(i, borderPane);
-            inventory.setItem(18 + i, borderPane);
         }
-
-        // Side columns
-        inventory.setItem(9, borderPane);
-        inventory.setItem(17, borderPane);
     }
 
     /**
@@ -101,6 +88,7 @@ public class SettingsGUI implements Listener {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text("Spawn Egg Custom Names", NamedTextColor.GOLD)
+                .decoration(TextDecoration.BOLD, true)
                 .decoration(TextDecoration.ITALIC, false));
 
         List<Component> lore = new ArrayList<>();
@@ -121,7 +109,7 @@ public class SettingsGUI implements Listener {
 
         meta.lore(lore);
         item.setItemMeta(meta);
-        inventory.setItem(11, item);
+        inventory.setItem(21, item);
     }
 
     /**
@@ -137,6 +125,7 @@ public class SettingsGUI implements Listener {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text("Crafted Item Custom Names", NamedTextColor.GOLD)
+                .decoration(TextDecoration.BOLD, true)
                 .decoration(TextDecoration.ITALIC, false));
 
         List<Component> lore = new ArrayList<>();
@@ -157,7 +146,7 @@ public class SettingsGUI implements Listener {
 
         meta.lore(lore);
         item.setItemMeta(meta);
-        inventory.setItem(15, item);
+        inventory.setItem(23, item);
     }
 
     /**
@@ -169,7 +158,7 @@ public class SettingsGUI implements Listener {
         meta.displayName(Component.text("« Back to Recipe List", NamedTextColor.YELLOW)
                 .decoration(TextDecoration.ITALIC, false));
         back.setItemMeta(meta);
-        inventory.setItem(22, back);
+        inventory.setItem(49, back);
     }
 
     @EventHandler
@@ -195,8 +184,8 @@ public class SettingsGUI implements Listener {
 
         int slot = event.getSlot();
 
-        // Back button
-        if (slot == 22) {
+        // Back button (slot 49)
+        if (slot == 49) {
             new RecipeListGUI(plugin, player).open();
             return;
         }
@@ -207,12 +196,12 @@ public class SettingsGUI implements Listener {
             return;
         }
 
-        // Spawn egg name toggle (slot 11)
-        if (slot == 11) {
+        // Spawn egg name toggle (slot 21)
+        if (slot == 21) {
             boolean newValue = !plugin.isKeepSpawnEggNames();
             plugin.getConfig().set("spawn-egg-keep-custom-name", newValue);
             plugin.saveConfig();
-            plugin.loadConfiguration(); // Reload to apply changes
+            plugin.loadConfiguration();
 
             MessageUtil.sendSuccess(player,
                     (newValue ? "Enabled" : "Disabled") + " spawn egg custom names");
@@ -220,12 +209,12 @@ public class SettingsGUI implements Listener {
             return;
         }
 
-        // Crafted names toggle (slot 15)
-        if (slot == 15) {
+        // Crafted names toggle (slot 23)
+        if (slot == 23) {
             boolean newValue = !plugin.isUseCraftedCustomNames();
             plugin.getConfig().set("use-crafted-custom-names", newValue);
             plugin.saveConfig();
-            plugin.loadConfiguration(); // Reload to apply changes
+            plugin.loadConfiguration();
 
             MessageUtil.sendSuccess(player,
                     (newValue ? "Enabled" : "Disabled") + " crafted item custom names");

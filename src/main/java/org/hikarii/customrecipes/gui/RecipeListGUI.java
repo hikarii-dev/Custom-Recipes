@@ -77,11 +77,21 @@ public class RecipeListGUI implements Listener {
             return;
         }
 
+        // Fill empty slots with glass panes (slots 0-44)
+        ItemStack emptySlot = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        ItemMeta emptyMeta = emptySlot.getItemMeta();
+        emptyMeta.displayName(Component.empty());
+        emptySlot.setItemMeta(emptyMeta);
+
+        for (int i = 0; i < RECIPES_PER_PAGE; i++) {
+            inventory.setItem(i, emptySlot);
+        }
+
         // Calculate pagination
         int startIndex = page * RECIPES_PER_PAGE;
         int endIndex = Math.min(startIndex + RECIPES_PER_PAGE, recipes.size());
 
-        // Add recipe items
+        // Add recipe items (overwrite glass where recipes exist)
         int slot = 0;
         for (int i = startIndex; i < endIndex; i++) {
             CustomRecipe recipe = recipes.get(i);
@@ -313,9 +323,7 @@ public class RecipeListGUI implements Listener {
                 MessageUtil.sendError(player, "You don't have permission to create recipes.");
                 return;
             }
-            // Open recipe creator GUI (placeholder for now)
-            player.closeInventory();
-            MessageUtil.sendInfo(player, "Recipe creator coming soon!");
+            new RecipeCreatorGUI(plugin, player).open();
             return;
         }
 

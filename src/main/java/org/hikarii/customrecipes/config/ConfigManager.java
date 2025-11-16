@@ -2,10 +2,12 @@ package org.hikarii.customrecipes.config;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.hikarii.customrecipes.CustomRecipes;
 import org.hikarii.customrecipes.recipe.CustomRecipe;
 import org.hikarii.customrecipes.recipe.RecipeManager;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,13 +16,14 @@ import java.util.Set;
  * Manages plugin configuration and recipe loading
  */
 public class ConfigManager {
-
     private final CustomRecipes plugin;
     private final RecipeConfigLoader recipeLoader;
+    private final RecipeFileManager recipeFileManager;
 
     public ConfigManager(CustomRecipes plugin) {
         this.plugin = plugin;
         this.recipeLoader = new RecipeConfigLoader(plugin);
+        this.recipeFileManager = new RecipeFileManager(plugin);
     }
 
     /**
@@ -47,7 +50,7 @@ public class ConfigManager {
         int successCount = 0;
         int failCount = 0;
 
-        // Load each enabled recipe
+        // Load each enabled recipe FROM FILES
         for (String key : enabledRecipes) {
             try {
                 // Validate key
@@ -60,10 +63,22 @@ public class ConfigManager {
                     continue;
                 }
 
-                // Get recipe configuration section
-                ConfigurationSection recipeSection = config.getConfigurationSection(key);
-                if (recipeSection == null) {
-                    throw new ValidationException("Recipe configuration not found for key: " + key);
+                // Try to load from individual file first
+                File recipeFile = new File(recipeFileManager.getRecipesFolder(), key + ".yml");
+                ConfigurationSection recipeSection;
+
+                if (recipeFile.exists()) {
+                    // Load from individual file
+                    YamlConfiguration fileConfig = YamlConfiguration.loadConfiguration(recipeFile);
+                    recipeSection = fileConfig;
+                    plugin.debug("Loading recipe '" + key + "' from file");
+                } else {
+                    // Fallback: load from main config (for backwards compatibility)
+                    recipeSection = config.getConfigurationSection(key);
+                    if (recipeSection == null) {
+                        throw new ValidationException("Recipe file not found and not in main config: " + key);
+                    }
+                    plugin.debug("Loading recipe '" + key + "' from main config (legacy)");
                 }
 
                 // Load the recipe
@@ -161,5 +176,9 @@ public class ConfigManager {
         FileConfiguration config = plugin.getConfig();
         List<String> enabled = config.getStringList("enabled-recipes");
         return enabled.contains(recipeKey);
+    }
+
+    public RecipeFileManager getRecipeFileManager() {
+        return recipeFileManager;
     }
 }

@@ -5,7 +5,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.Material;
 import org.hikarii.customrecipes.CustomRecipes;
+import org.hikarii.customrecipes.config.JsonRecipeFileManager;
 
+import java.util.Map;
 import java.util.*;
 
 /**
@@ -101,6 +103,26 @@ public class RecipeManager {
     }
 
     /**
+     * Registers a single recipe without clearing existing ones
+     *
+     * @param recipe the recipe to register
+     * @return true if successful
+     */
+    public boolean registerSingleRecipe(CustomRecipe recipe) {
+        // Add to recipes map
+        recipes.put(recipe.getKey(), recipe);
+
+        // Register with server
+        boolean success = registerRecipe(recipe);
+
+        if (success) {
+            plugin.getLogger().info("Registered new recipe: " + recipe.getKey());
+        }
+
+        return success;
+    }
+
+    /**
      * Registers a single recipe with the server
      *
      * @param recipe the recipe to register
@@ -116,9 +138,15 @@ public class RecipeManager {
 
                 ShapedRecipe shapedRecipe = new ShapedRecipe(key, recipe.createResult(useCraftedNames, keepSpawnEggNames));
 
-                // Set the shape
+                // Set the shape (can be 1-3 rows)
                 String[] shape = recipe.getRecipeData().toShapeArray();
-                shapedRecipe.shape(shape[0], shape[1], shape[2]);
+                if (shape.length == 1) {
+                    shapedRecipe.shape(shape[0]);
+                } else if (shape.length == 2) {
+                    shapedRecipe.shape(shape[0], shape[1]);
+                } else {
+                    shapedRecipe.shape(shape[0], shape[1], shape[2]);
+                }
 
                 // Set the ingredients
                 Map<Character, Material> ingredients = recipe.getRecipeData().getIngredientMap();
@@ -132,9 +160,24 @@ public class RecipeManager {
 
                 plugin.debug("Registered shaped recipe: " + recipe.getKey());
                 return true;
-            }
+            } else if (recipe.getType() == RecipeType.SHAPELESS) {
+                boolean useCraftedNames = plugin.isUseCraftedCustomNames();
+                boolean keepSpawnEggNames = plugin.isKeepSpawnEggNames();
 
-            // Future: Add shapeless recipe support here
+                org.bukkit.inventory.ShapelessRecipe shapelessRecipe =
+                        new org.bukkit.inventory.ShapelessRecipe(key, recipe.createResult(useCraftedNames, keepSpawnEggNames));
+
+                // Add ingredients with counts
+                Map<Material, Integer> ingredients = recipe.getShapelessData().ingredients();
+                for (Map.Entry<Material, Integer> entry : ingredients.entrySet()) {
+                    shapelessRecipe.addIngredient(entry.getValue(), entry.getKey());
+                }
+
+                Bukkit.addRecipe(shapelessRecipe);
+                registeredKeys.add(key);
+                plugin.debug("Registered shapeless recipe: " + recipe.getKey());
+                return true;
+            }
 
         } catch (Exception e) {
             plugin.getLogger().warning("Failed to register recipe '" + recipe.getKey() + "': " + e.getMessage());
@@ -245,6 +288,41 @@ public class RecipeManager {
         }
 
         plugin.debug("Deleted recipe: " + key);
+        return true;
+    }
+
+    /**
+     * Deletes a recipe permanently (removes from manager, server, and FILES)
+     *
+     * @param key the recipe key
+     * @return true if successful, false otherwise
+     */
+    public boolean deleteRecipePermanently(String key) {
+        CustomRecipe recipe = getRecipe(key);
+        if (recipe == null) {
+            return false;
+        }
+
+        // Remove from manager
+        removeRecipe(key);
+
+        // Unregister from server
+        NamespacedKey namespacedKey = new NamespacedKey(plugin, recipe.getKey());
+        if (registeredKeys.contains(namespacedKey)) {
+            Bukkit.removeRecipe(namespacedKey);
+            registeredKeys.remove(namespacedKey);
+        }
+
+        // Delete YAML file
+        boolean yamlDeleted = plugin.getConfigManager().getRecipeFileManager().deleteRecipe(key);
+
+        // Delete JSON file
+        JsonRecipeFileManager jsonManager = new JsonRecipeFileManager(plugin);
+        boolean jsonDeleted = jsonManager.deleteRecipe(key);
+
+        plugin.debug("Permanently deleted recipe: " + key +
+                " (YAML: " + yamlDeleted + ", JSON: " + jsonDeleted + ")");
+
         return true;
     }
 

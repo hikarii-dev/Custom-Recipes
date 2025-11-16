@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.hikarii.customrecipes.recipe.data.ShapedRecipeData;
+import org.hikarii.customrecipes.recipe.data.ShapelessRecipeData;
 import org.hikarii.customrecipes.util.MessageUtil;
 
 import java.util.List;
@@ -14,7 +15,6 @@ import java.util.List;
  * Represents a custom recipe configuration
  */
 public class CustomRecipe {
-
     private final String key;
     private final String guiName;
     private final List<String> guiDescription;
@@ -22,8 +22,9 @@ public class CustomRecipe {
     private final List<String> craftedDescription;
     private final RecipeType type;
     private final ShapedRecipeData recipeData;
-    private final Material resultMaterial;
-    private final int resultAmount;
+    private final ShapelessRecipeData shapelessData;
+    private final ItemStack resultItem;
+    private final boolean hidden;
 
     /**
      * Creates a new custom recipe
@@ -35,8 +36,6 @@ public class CustomRecipe {
      * @param craftedDescription lore on crafted item (null for vanilla)
      * @param type recipe type
      * @param recipeData the recipe pattern data
-     * @param resultMaterial the result material
-     * @param resultAmount amount of items to craft (1-64)
      */
     public CustomRecipe(
             String key,
@@ -46,8 +45,9 @@ public class CustomRecipe {
             List<String> craftedDescription,
             RecipeType type,
             ShapedRecipeData recipeData,
-            Material resultMaterial,
-            int resultAmount) {
+            ShapelessRecipeData shapelessData,
+            ItemStack resultItem,
+            boolean hidden) {
 
         this.key = key.toLowerCase();
         this.guiName = guiName;
@@ -56,8 +56,9 @@ public class CustomRecipe {
         this.craftedDescription = craftedDescription;
         this.type = type;
         this.recipeData = recipeData;
-        this.resultMaterial = resultMaterial;
-        this.resultAmount = Math.max(1, Math.min(64, resultAmount));
+        this.shapelessData = shapelessData;
+        this.resultItem = resultItem.clone();
+        this.hidden = hidden;
     }
 
     /**
@@ -68,30 +69,30 @@ public class CustomRecipe {
      * @return the crafted item
      */
     public ItemStack createResult(boolean useCraftedCustomNames, boolean keepSpawnEggName) {
-        ItemStack item = new ItemStack(resultMaterial, resultAmount);
-        ItemMeta meta = item.getItemMeta();
+        ItemStack item = resultItem.clone();
 
-        if (meta != null && useCraftedCustomNames) {
-            boolean isSpawnEgg = resultMaterial.name().endsWith("_SPAWN_EGG");
-            boolean shouldSetName = !isSpawnEgg || keepSpawnEggName;
+        if (useCraftedCustomNames) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null) {
+                boolean isSpawnEgg = resultItem.getType().name().endsWith("_SPAWN_EGG");
+                boolean shouldSetName = !isSpawnEgg || keepSpawnEggName;
 
-            if (shouldSetName && craftedName != null && !craftedName.isEmpty()) {
-                Component nameComponent = MessageUtil.colorize(craftedName)
-                        .decoration(TextDecoration.ITALIC, false);
-                meta.displayName(nameComponent);
+                if (shouldSetName && craftedName != null && !craftedName.isEmpty()) {
+                    Component nameComponent = MessageUtil.colorize(craftedName)
+                            .decoration(TextDecoration.ITALIC, false);
+                    meta.displayName(nameComponent);
+                }
+
+                if (craftedDescription != null && !craftedDescription.isEmpty()) {
+                    List<Component> loreComponents = craftedDescription.stream()
+                            .map(line -> MessageUtil.colorize(line)
+                                    .decoration(TextDecoration.ITALIC, false))
+                            .toList();
+                    meta.lore(loreComponents);
+                }
+                item.setItemMeta(meta);
             }
-
-            if (craftedDescription != null && !craftedDescription.isEmpty()) {
-                List<Component> loreComponents = craftedDescription.stream()
-                        .map(line -> MessageUtil.colorize(line)
-                                .decoration(TextDecoration.ITALIC, false))
-                        .toList();
-                meta.lore(loreComponents);
-            }
-
-            item.setItemMeta(meta);
         }
-
         return item;
     }
 
@@ -101,7 +102,7 @@ public class CustomRecipe {
      * @return the GUI display item
      */
     public ItemStack createGUIDisplay() {
-        ItemStack item = new ItemStack(resultMaterial, resultAmount);
+        ItemStack item = resultItem.clone();
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
@@ -118,10 +119,8 @@ public class CustomRecipe {
                         .toList();
                 meta.lore(loreComponents);
             }
-
             item.setItemMeta(meta);
         }
-
         return item;
     }
 
@@ -166,12 +165,24 @@ public class CustomRecipe {
         return recipeData;
     }
 
+    public ShapelessRecipeData getShapelessData() {
+        return shapelessData;
+    }
+
     public Material getResultMaterial() {
-        return resultMaterial;
+        return resultItem.getType();
     }
 
     public int getResultAmount() {
-        return resultAmount;
+        return resultItem.getAmount();
+    }
+
+    public ItemStack getResultItem() {
+        return resultItem.clone();
+    }
+
+    public boolean isHidden() {
+        return hidden;
     }
 
     @Override
@@ -179,8 +190,8 @@ public class CustomRecipe {
         return "CustomRecipe{" +
                 "key='" + key + '\'' +
                 ", type=" + type +
-                ", result=" + resultMaterial +
-                "x" + resultAmount +
+                ", result=" + resultItem.getType() +
+                "x" + resultItem.getAmount() +
                 '}';
     }
 }
