@@ -21,22 +21,31 @@ For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T)
 
 ## Features
 
-### Recipe Management
-- **Shaped Recipes** - Create custom 3x3 crafting grid patterns
-- **Custom Names & Lore** - Add colored names and descriptions to crafted items
-- **Flexible Configuration** - Easy-to-use configuration
+### Recipe Types
+- **Shaped Recipes** - Create custom 3x3 crafting grid patterns with exact positions
+- **Shapeless Recipes** - Position-independent recipes (any arrangement works)
 - **Bulk Crafting** - Configure recipes to produce multiple items (1-64)
+- **Hidden Recipes** - Hide from recipe viewer mods until player discovers them
+  
+### Recipe Management
+- **Recipe Creator GUI** - Create recipes in-game with drag-and-drop interface
+- **Recipe Editor GUI** - Modify existing recipes visually
+- **Item Editor** - Customize result items with:
+  - GUI Name & Description (shown in recipe browser)
+  - Crafted Name & Description (shown on crafted item)
+  - CustomModelData support for resource packs
+  - NBT data and custom tags
+  - Enchantments with custom levels
+- **Per-World Restrictions** - Enable/disable recipes per world (Overworld, Nether, End)
 - **Hot Reload** - Reload recipes without restarting the server
 
-### GUI Interface
-- **Recipe Browser** - View all recipes in an interactive GUI
-- **Recipe Viewer** - Inspect individual recipe patterns visually
-- **Pages** - Automatically creates new pages when there are a large number of recipes
-- **Intuitive Navigation** - Easy-to-use interface for players and admins
-
 ### User Experience
+- **Recipe Browser GUI** - View all recipes in an interactive interface
+- **Recipe Viewer** - Inspect individual recipe patterns visually
+- **Automatic Pagination** - Handles large recipe collections
 - **MiniMessage Support** - Rich text formatting with gradients and colors
 - **Permission System** - Granular permission control
+- **Update Notifications** - Automatic alerts for new versions (for admins)
 
 ---
 
@@ -50,6 +59,9 @@ For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T)
 | `/customrecipes reload` | `/cr reload`, `/cr rl` | Reload configuration | `customrecipes.reload` |
 | `/customrecipes list` | `/cr list`, `/cr l` | List all recipes | `customrecipes.list` |
 | `/customrecipes gui` | `/cr gui`, `/cr menu` | Open recipe GUI | `customrecipes.gui` |
+| `/customrecipes enable <recipe>` | `/cr enable` | Enable a recipe | `customrecipes.manage` |
+| `/customrecipes disable <recipe>` | `/cr disable` | Disable a recipe | `customrecipes.manage` |
+| `/customrecipes delete <recipe>` | `/cr delete` | Delete a recipe | `customrecipes.manage` |
 
 ### Permissions
 
@@ -60,6 +72,8 @@ For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T)
 | `customrecipes.reload` | Reload configuration | op |
 | `customrecipes.list` | View recipe list | true |
 | `customrecipes.gui` | Open GUI interface | true |
+| `customrecipes.manage` | Manage recipes (enable/disable/delete) | op |
+| `customrecipes.update.notify` | Receive update notifications | op |
 
 ---
 
@@ -71,34 +85,44 @@ For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T)
 # Enable debug logging
 debug: false
 
+# Update checker settings
+update-checker:
+  enabled: true
+  source: GITHUB
+  github-repo: "hikarii-dev/Custom-Recipes"
+
 # Use custom names and descriptions on crafted items
 use-crafted-custom-names: true
 
 # Keep custom names on spawn eggs when they spawn mobs
 spawn-egg-keep-custom-name: false
 
-# List of enabled recipe keys
-enabled-recipes:
-  - RecipeKey
-  - BeeSpawnEgg
+# Ignore metadata/NBT when checking recipe ingredients
+ignore-metadata: false
+
+# World restrictions for recipes
+world-restrictions:
+  enabled: false
+  disabled-worlds: []
 
 # Recipe Format:
- <RecipeKey>:                    # Recipe Name
-   gui-name: "Name in GUI"       # Always shown in recipe browser GUI
-   gui-description:              # Always shown in recipe browser GUI
-     - "Line 1"
-     - "Line 2"
-   crafted-name: "Name on item"  # (Optional) Name on crafted item
-   crafted-description:          # (Optional) Lore on crafted item
-     - "Line 1"
-     - "Line 2"
-   type: SHAPED                  # Recipe type (currently only SHAPED is supported)
-   recipe:                       # 3x3 crafting grid pattern
-     - ITEM ITEM ITEM            # Top row
-     - ITEM ITEM ITEM            # Middle row
-     - ITEM ITEM ITEM            # Bottom row
-   material: RESULT_ITEM         # The resulting item
-   amount: 1                     # (Optional) Amount crafted (1-64), default: 1
+<RecipeKey>:
+  gui-name: "Name in GUI"           # Always shown in recipe browser GUI
+  gui-description:                  # Always shown in recipe browser GUI
+    - "Line 1"
+  crafted-name: "Name on item"      # (Optional) Name on crafted item
+  crafted-description:              # (Optional) Lore on crafted item
+    - "Line 1"
+  type: SHAPED                      # SHAPED or SHAPELESS
+  recipe:                           # For SHAPED recipes
+    - ITEM ITEM ITEM
+    - ITEM ITEM ITEM
+    - ITEM ITEM ITEM
+  ingredients:                      # For SHAPELESS recipes
+    - MATERIAL:COUNT
+  material: RESULT_ITEM
+  amount: 1
+  hidden: false                     # Hide from recipe mods until discovered
 ```
 
 ### Example Recipes
@@ -153,13 +177,17 @@ This plugin supports **MiniMessage** format for text coloring:
 
 ## Roadmap
 
+### Completed ✅
+- [✅] **Shapeless Recipes** - Support for recipes without specific patterns
+- [✅] **Recipe Editor GUI** - In-game recipe creation interface
+- [✅] **Recipe Export/Import** - Recipes saved as individual files
+- [✅] **Per-World Recipes** - Enable/disable recipes per world
+- [✅] **Hidden Recipes** - Discoverable recipes system
+
 ### Planned Features
-- [✨] **Shapeless Recipes** - Support for recipes without specific patterns
 - [ ] **Furnace Recipes** - Custom smelting recipes
 - [ ] **Brewing Recipes** - Custom potion recipes
 - [ ] **Smithing Recipes** - Custom smithing table recipes
-- [✨] **Recipe Editor GUI** - In-game recipe creation interface
-- [✨] **Recipe Export/Import** - Share recipes between servers
 - [ ] **MySQL Support** - Store recipes in database
 - [ ] **Per-Player Recipes** - Unlock recipes per player
 - [ ] **Recipe Groups** - Organize recipes into categories
@@ -169,7 +197,7 @@ This plugin supports **MiniMessage** format for text coloring:
 
 ## Installation
 
-1. **Download** the latest `CustomRecipes-1.0.0.jar` from releases
+1. **Download** the latest `CustomRecipes-1.1.2.jar` from releases
 2. **Place** the jar file in your server's `plugins` folder
 3. **Start** your server to generate the default configuration
 4. **Edit** `plugins/CustomRecipes/config.yml` to add your custom recipes or use `/customrecipes gui` with GUI-Create system.
