@@ -50,18 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Clear labeling of what appears where (crafted item vs recipe browser)
   - Better button descriptions with usage hints
   - Right-click functionality for clearing descriptions
-  
-### Technical
-- Added `WorldRestrictionManager` for dimension-based recipe control
-- Enhanced `ItemStackSerializer` with CustomModelData methods
-- Added NBT comparison utilities for ingredient validation
-- Improved `RecipeListGUI` with edit item functionality
-- Background scheduler task for runtime update checking
-- World restriction data in recipe YAML/JSON files
-- Added `guiName` and `guiDescription` fields to `ItemEditorGUI`
-- Enhanced `RecipeManager.updateRecipeResult()` to save all text fields
-- Improved `saveRecipeToFile()` to persist GUI and Crafted properties
-- Added static `lastEditors` map for accessing editor state
 
 ## [1.1.0] - 2025-11-16
 
@@ -122,17 +110,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Recipe loading handles both Map and ConfigurationSection
 - Shaped recipes with 1-2 rows now load correctly
 - Recipe keys with different cases handled properly
-
-### Technical
-- Added `ItemStackSerializer` utility class
-- Added `JsonRecipeFileManager` for JSON handling
-- Added `RecipeDataManager` for hidden recipe tracking
-- Added `ItemEditorGUI` for item customization
-- Added `RecipeCreatorGUI` for in-game recipe creation
-- Improved `RecipeConfigLoader` with fallback support
-- Added `ShapelessRecipeData` record class
-- Enhanced `CustomRecipe` to store full ItemStack
-- Better error handling and validation throughout
 
 ## [1.0.0] - 2025-11-15
 
