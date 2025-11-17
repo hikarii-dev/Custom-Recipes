@@ -144,6 +144,8 @@ BeeSpawnEgg:
     - HONEY_BOTTLE HONEY_BOTTLE HONEY_BOTTLE
   material: BEE_SPAWN_EGG
   amount: 1
+  hidden: false
+  type: SHAPED
 ```
 
 #### Bulk Crafting Recipe
@@ -159,6 +161,8 @@ GoldenAppleStack:
     - GOLD_BLOCK GOLD_BLOCK GOLD_BLOCK
   material: GOLDEN_APPLE
   amount: 8
+  hidden: false
+  type: SHAPED
 ```
 
 ### Color Codes
