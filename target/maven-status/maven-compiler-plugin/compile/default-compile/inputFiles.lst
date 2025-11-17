@@ -16,6 +16,7 @@ C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrec
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\gui\RecipeEditorGUI.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\gui\RecipeListGUI.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\gui\SettingsGUI.java
+C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\gui\WorldSettingsGUI.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\listener\RecipeDiscoverListener.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\listener\RecipeHidingListener.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\recipe\CustomRecipe.java
@@ -25,6 +26,7 @@ C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrec
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\recipe\RecipeDataManager.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\recipe\RecipeManager.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\recipe\RecipeType.java
+C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\recipe\RecipeWorldManager.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\update\UpdateChecker.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\update\UpdateNotifier.java
 C:\Users\hello\Desktop\Plugins\CustomRecipes\src\main\java\org\hikarii\customrecipes\update\UpdateSource.java

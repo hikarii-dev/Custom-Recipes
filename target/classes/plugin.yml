@@ -1,5 +1,5 @@
 name: CustomRecipes
-version: '1.1.0'
+version: '1.1.2'
 main: org.hikarii.customrecipes.CustomRecipes
 api-version: '1.21'
 author: hikarii
@@ -8,6 +8,7 @@ website:
   https://discord.gg/ChTjgTqw3T
   https://modrinth.com/user/hikarii-dev
   https://www.spigotmc.org/members/hikarii.2411622/
+  https://hangar.papermc.io/hikarii/Custom-Recipes
   https://github.com/hikarii-dev
 
 commands:

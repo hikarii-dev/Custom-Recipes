@@ -1,7 +1,10 @@
 org\hikarii\customrecipes\command\CustomRecipesCommand$SubCommand.class
 org\hikarii\customrecipes\CustomRecipes.class
 org\hikarii\customrecipes\recipe\RecipeManager.class
+org\hikarii\customrecipes\gui\WorldSettingsGUI$1.class
+org\hikarii\customrecipes\recipe\RecipeWorldManager$WorldType.class
 org\hikarii\customrecipes\gui\RecipeListGUI.class
+org\hikarii\customrecipes\recipe\RecipeWorldManager.class
 org\hikarii\customrecipes\command\subcommands\ReloadSubcommand.class
 org\hikarii\customrecipes\config\ConfigManager.class
 org\hikarii\customrecipes\config\ValidationException.class
@@ -24,8 +27,10 @@ org\hikarii\customrecipes\recipe\data\ShapedRecipeData.class
 org\hikarii\customrecipes\update\UpdateNotifier.class
 org\hikarii\customrecipes\update\UpdateChecker.class
 org\hikarii\customrecipes\recipe\data\ShapelessRecipeData.class
+org\hikarii\customrecipes\gui\WorldSettingsGUI.class
 org\hikarii\customrecipes\command\CustomRecipesCommand.class
 org\hikarii\customrecipes\config\RecipeConfigLoader.class
+org\hikarii\customrecipes\recipe\RecipeWorldManager$1.class
 org\hikarii\customrecipes\recipe\RecipeType.class
 org\hikarii\customrecipes\command\subcommands\DeleteSubcommand.class
 org\hikarii\customrecipes\util\ItemStackSerializer.class
