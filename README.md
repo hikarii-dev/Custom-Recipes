@@ -154,12 +154,12 @@ This plugin supports **MiniMessage** format for text coloring:
 ## Roadmap
 
 ### Planned Features
-- [ ] **Shapeless Recipes** - Support for recipes without specific patterns
+- [✨] **Shapeless Recipes** - Support for recipes without specific patterns
 - [ ] **Furnace Recipes** - Custom smelting recipes
 - [ ] **Brewing Recipes** - Custom potion recipes
 - [ ] **Smithing Recipes** - Custom smithing table recipes
-- [ ] **Recipe Editor GUI** - In-game recipe creation interface
-- [ ] **Recipe Export/Import** - Share recipes between servers
+- [✨] **Recipe Editor GUI** - In-game recipe creation interface
+- [✨] **Recipe Export/Import** - Share recipes between servers
 - [ ] **MySQL Support** - Store recipes in database
 - [ ] **Per-Player Recipes** - Unlock recipes per player
 - [ ] **Recipe Groups** - Organize recipes into categories
