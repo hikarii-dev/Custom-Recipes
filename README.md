@@ -183,6 +183,7 @@ This plugin supports **MiniMessage** format for text coloring:
 ---
 
 ## Statistics
+[![](https://bstats.org/signatures/bukkit/Custom%20Recipes.svg)](https://bstats.org/plugin/bukkit/CustomCrafting/27998?refresh=true)
 
 ---
 
