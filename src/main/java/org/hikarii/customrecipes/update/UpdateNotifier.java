@@ -29,7 +29,7 @@ public class UpdateNotifier implements Listener {
 
         if (updateChecker.isUpdateAvailable()) {
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-                sendUpdateNotification(player);
+                updateChecker.sendUpdateNotification(player);
             }, 40L);
         }
     }

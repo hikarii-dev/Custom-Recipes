@@ -23,7 +23,7 @@ import org.hikarii.customrecipes.recipe.data.ShapedRecipeData;
 import org.hikarii.customrecipes.recipe.data.ShapelessRecipeData;
 import org.hikarii.customrecipes.util.ItemStackSerializer;
 import org.hikarii.customrecipes.util.MessageUtil;
-
+import java.util.function.Consumer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -298,7 +298,7 @@ public class RecipeCreatorGUI implements Listener {
             RecipeType savedType = currentType;
 
             // Create and save editor reference
-            currentEditor = new ItemEditorGUI(plugin, player, result, () -> {
+            currentEditor = new ItemEditorGUI(plugin, player, result, (editedItem) -> {
                 // Create NEW GUI instead of reopening old one
                 RecipeCreatorGUI newGUI = new RecipeCreatorGUI(plugin, player);
                 newGUI.currentType = savedType;
@@ -310,9 +310,9 @@ public class RecipeCreatorGUI implements Listener {
                     }
                 }
 
-                // Set edited result from editor
-                if (currentEditor != null) {
-                    newGUI.inventory.setItem(RESULT_SLOT, currentEditor.getEditedItem());
+                // Set edited result from editor if not null
+                if (editedItem != null) {
+                    newGUI.inventory.setItem(RESULT_SLOT, editedItem);
                 }
 
                 newGUI.open();

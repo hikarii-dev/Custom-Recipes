@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -16,12 +17,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.hikarii.customrecipes.CustomRecipes;
 import org.hikarii.customrecipes.recipe.CustomRecipe;
 import org.hikarii.customrecipes.util.MessageUtil;
-
+import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GUI for viewing all custom recipes
+ * Enhanced GUI for viewing all custom recipes with Edit Item functionality
  */
 public class RecipeListGUI implements Listener {
 
@@ -30,7 +31,7 @@ public class RecipeListGUI implements Listener {
     private final Inventory inventory;
     private final List<CustomRecipe> recipes;
     private int page = 0;
-    private static final int RECIPES_PER_PAGE = 45; // 5 rows for recipes
+    private static final int RECIPES_PER_PAGE = 45;
 
     public RecipeListGUI(CustomRecipes plugin, Player player) {
         this.plugin = plugin;
@@ -38,46 +39,39 @@ public class RecipeListGUI implements Listener {
         this.recipes = new ArrayList<>(plugin.getRecipeManager().getAllRecipes());
         this.inventory = Bukkit.createInventory(
                 null,
-                54, // 6 rows
+                54,
                 Component.text("Custom Recipes", NamedTextColor.DARK_PURPLE)
                         .decoration(TextDecoration.ITALIC, false)
         );
 
-        // Register as listener
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-
         updateInventory();
     }
 
-    /**
-     * Opens the GUI for the player
-     */
     public void open() {
         player.openInventory(inventory);
     }
 
-    /**
-     * Updates the inventory contents
-     */
     private void updateInventory() {
         inventory.clear();
 
         if (recipes.isEmpty()) {
-            // Show "no recipes" message
             ItemStack noRecipes = new ItemStack(Material.BARRIER);
             ItemMeta meta = noRecipes.getItemMeta();
             meta.displayName(Component.text("No Recipes Loaded", NamedTextColor.RED)
                     .decoration(TextDecoration.ITALIC, false));
             meta.lore(List.of(
                     Component.text("Add recipes in config.yml", NamedTextColor.GRAY)
+                            .decoration(TextDecoration.ITALIC, false),
+                    Component.text("or create one with the button below", NamedTextColor.GRAY)
                             .decoration(TextDecoration.ITALIC, false)
             ));
             noRecipes.setItemMeta(meta);
             inventory.setItem(22, noRecipes);
+            addNavigationButtons();
             return;
         }
 
-        // Fill empty slots with glass panes (slots 0-44)
         ItemStack emptySlot = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
         ItemMeta emptyMeta = emptySlot.getItemMeta();
         emptyMeta.displayName(Component.empty());
@@ -87,11 +81,9 @@ public class RecipeListGUI implements Listener {
             inventory.setItem(i, emptySlot);
         }
 
-        // Calculate pagination
         int startIndex = page * RECIPES_PER_PAGE;
         int endIndex = Math.min(startIndex + RECIPES_PER_PAGE, recipes.size());
 
-        // Add recipe items (overwrite glass where recipes exist)
         int slot = 0;
         for (int i = startIndex; i < endIndex; i++) {
             CustomRecipe recipe = recipes.get(i);
@@ -99,24 +91,16 @@ public class RecipeListGUI implements Listener {
             inventory.setItem(slot++, item);
         }
 
-        // Add navigation buttons (bottom row)
         addNavigationButtons();
-
-        // Add info item
         addInfoItem();
     }
 
-    /**
-     * Creates an item representing a recipe
-     */
     private ItemStack createRecipeItem(CustomRecipe recipe) {
         ItemStack item = new ItemStack(recipe.getResultMaterial());
         ItemMeta meta = item.getItemMeta();
 
-        // Check if recipe is enabled
         boolean enabled = plugin.getRecipeManager().isRecipeEnabled(recipe.getKey());
 
-        // Set display name with status indicator
         Component displayName;
         if (recipe.getGuiName() != null && !recipe.getGuiName().isEmpty()) {
             displayName = MessageUtil.colorize(recipe.getGuiName());
@@ -127,7 +111,6 @@ public class RecipeListGUI implements Listener {
             );
         }
 
-        // Add status indicator
         Component statusIndicator = Component.text(
                 enabled ? " ✓" : " ✗",
                 enabled ? NamedTextColor.GREEN : NamedTextColor.RED
@@ -136,12 +119,19 @@ public class RecipeListGUI implements Listener {
 
         meta.displayName(displayName.decoration(TextDecoration.ITALIC, false));
 
-        // Set lore
         List<Component> lore = new ArrayList<>();
-
         lore.add(Component.empty());
 
-        // Status
+        // Check world restrictions
+        List<String> disabledWorlds = plugin.getRecipeWorldManager().getDisabledWorlds(recipe.getKey());
+        if (!disabledWorlds.isEmpty()) {
+            lore.add(Component.text("World Restrictions:", NamedTextColor.GOLD)
+                    .decoration(TextDecoration.ITALIC, false));
+            lore.add(Component.text("Disabled in: " + String.join(", ", disabledWorlds), NamedTextColor.YELLOW)
+                    .decoration(TextDecoration.ITALIC, false));
+            lore.add(Component.empty());
+        }
+
         lore.add(Component.text("Status: ", NamedTextColor.GRAY)
                 .append(Component.text(
                         enabled ? "Enabled" : "Disabled",
@@ -161,7 +151,6 @@ public class RecipeListGUI implements Listener {
                 .append(Component.text(recipe.getResultAmount() + "x", NamedTextColor.WHITE))
                 .decoration(TextDecoration.ITALIC, false));
 
-        // Add GUI description if present
         if (recipe.getGuiDescription() != null && !recipe.getGuiDescription().isEmpty()) {
             lore.add(Component.empty());
             lore.add(Component.text("Description:", NamedTextColor.YELLOW)
@@ -174,7 +163,9 @@ public class RecipeListGUI implements Listener {
         }
 
         lore.add(Component.empty());
-        lore.add(Component.text("» Click to manage recipe", NamedTextColor.DARK_GRAY)
+        lore.add(Component.text("» Left Click to manage recipe", NamedTextColor.DARK_GRAY)
+                .decoration(TextDecoration.ITALIC, true));
+        lore.add(Component.text("» Right Click to edit item", NamedTextColor.DARK_PURPLE)
                 .decoration(TextDecoration.ITALIC, true));
 
         meta.lore(lore);
@@ -183,13 +174,10 @@ public class RecipeListGUI implements Listener {
         return item;
     }
 
-    /**
-     * Adds navigation buttons and control buttons to the bottom row
-     */
     private void addNavigationButtons() {
         int maxPages = (int) Math.ceil((double) recipes.size() / RECIPES_PER_PAGE);
 
-        // Previous page button (left of info book - slot 48) - always visible
+        // Previous page button (slot 48)
         ItemStack prevButton = new ItemStack(Material.ARROW);
         ItemMeta prevMeta = prevButton.getItemMeta();
         if (page > 0) {
@@ -210,7 +198,7 @@ public class RecipeListGUI implements Listener {
         prevButton.setItemMeta(prevMeta);
         inventory.setItem(48, prevButton);
 
-        // Next page button (right of info book - slot 50) - always visible
+        // Next page button (slot 50)
         ItemStack nextButton = new ItemStack(Material.ARROW);
         ItemMeta nextMeta = nextButton.getItemMeta();
         if (page < maxPages - 1) {
@@ -258,9 +246,6 @@ public class RecipeListGUI implements Listener {
         inventory.setItem(53, settingsButton);
     }
 
-    /**
-     * Adds info item
-     */
     private void addInfoItem() {
         ItemStack info = new ItemStack(Material.BOOK);
         ItemMeta meta = info.getItemMeta();
@@ -271,9 +256,9 @@ public class RecipeListGUI implements Listener {
                 Component.text("Total Recipes: " + recipes.size(), NamedTextColor.GRAY)
                         .decoration(TextDecoration.ITALIC, false),
                 Component.empty(),
-                Component.text("Click any recipe to view", NamedTextColor.GRAY)
+                Component.text("Left Click recipe to manage", NamedTextColor.GRAY)
                         .decoration(TextDecoration.ITALIC, false),
-                Component.text("its crafting pattern!", NamedTextColor.GRAY)
+                Component.text("Right Click recipe to edit item", NamedTextColor.GRAY)
                         .decoration(TextDecoration.ITALIC, false)
         ));
         info.setItemMeta(meta);
@@ -302,8 +287,9 @@ public class RecipeListGUI implements Listener {
         }
 
         int slot = event.getSlot();
+        ClickType clickType = event.getClick();
 
-        // Navigation buttons (left of book - slot 48, right of book - slot 50)
+        // Navigation buttons
         if (slot == 48 && page > 0) {
             page--;
             updateInventory();
@@ -333,12 +319,45 @@ public class RecipeListGUI implements Listener {
             return;
         }
 
-        // Recipe click - open recipe editor/viewer
+        // Recipe click
         if (slot < 45) {
             int recipeIndex = (page * RECIPES_PER_PAGE) + slot;
             if (recipeIndex < recipes.size()) {
                 CustomRecipe recipe = recipes.get(recipeIndex);
-                new RecipeEditorGUI(plugin, player, recipe).open();
+
+                if (clickType == ClickType.RIGHT) {
+                    // Right click - Edit item
+                    if (!player.hasPermission("customrecipes.manage")) {
+                        MessageUtil.sendError(player, "You don't have permission to edit recipes.");
+                        return;
+                    }
+
+                    ItemStack resultItem = recipe.getResultItem();
+
+                    // Pass existing GUI and Crafted fields
+                    new ItemEditorGUI(plugin, player, resultItem,
+                            recipe.getGuiName(),
+                            recipe.getGuiDescription(),
+                            recipe.getCraftedName(),
+                            recipe.getCraftedDescription(),
+                            (editedItem) -> {
+                                if (editedItem != null) {
+                                    ItemEditorGUI editor = ItemEditorGUI.getLastEditor(player.getUniqueId());
+                                    String newGuiName = editor != null ? editor.getGuiName() : null;
+                                    List<String> newGuiDesc = editor != null ? editor.getGuiDescription() : null;
+                                    String newCraftedName = editor != null ? editor.getCustomName() : null;
+                                    List<String> newCraftedDesc = editor != null ? editor.getCustomLore() : null;
+
+                                    plugin.getRecipeManager().updateRecipeResult(recipe.getKey(), editedItem,
+                                            newGuiName, newGuiDesc, newCraftedName, newCraftedDesc);
+                                    MessageUtil.sendSuccess(player, "Updated result item for recipe: " + recipe.getKey());
+                                }
+                                new RecipeListGUI(plugin, player).open();
+                            }).open();
+                } else {
+                    // Left click - Manage recipe
+                    new RecipeEditorGUI(plugin, player, recipe).open();
+                }
             }
         }
     }

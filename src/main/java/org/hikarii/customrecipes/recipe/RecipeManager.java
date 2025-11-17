@@ -2,11 +2,13 @@ package org.hikarii.customrecipes.recipe;
 
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.Material;
 import org.hikarii.customrecipes.CustomRecipes;
 import org.hikarii.customrecipes.config.JsonRecipeFileManager;
-
+import org.hikarii.customrecipes.util.ItemStackSerializer;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.*;
 
@@ -324,6 +326,129 @@ public class RecipeManager {
                 " (YAML: " + yamlDeleted + ", JSON: " + jsonDeleted + ")");
 
         return true;
+    }
+
+    /**
+     * Updates the result item for a recipe
+     *
+     * @param recipeKey the recipe key
+     * @param newResult the new result item
+     * @return true if successful
+     */
+    public boolean updateRecipeResult(String recipeKey, ItemStack newResult,
+                                      String newGuiName, List<String> newGuiDescription,
+                                      String newCraftedName, List<String> newCraftedDescription) {
+        CustomRecipe recipe = getRecipe(recipeKey);
+        if (recipe == null) {
+            return false;
+        }
+
+        // Create new recipe with updated result AND all text fields
+        CustomRecipe updatedRecipe = new CustomRecipe(
+                recipe.getKey(),
+                newGuiName != null ? newGuiName : recipe.getGuiName(),
+                newGuiDescription != null ? newGuiDescription : recipe.getGuiDescription(),
+                newCraftedName != null ? newCraftedName : recipe.getCraftedName(),
+                newCraftedDescription != null ? newCraftedDescription : recipe.getCraftedDescription(),
+                recipe.getType(),
+                recipe.getRecipeData(),
+                recipe.getShapelessData(),
+                newResult,
+                recipe.isHidden()
+        );
+
+        // Replace in map
+        recipes.put(recipeKey.toLowerCase(), updatedRecipe);
+
+        // Re-register with server
+        NamespacedKey namespacedKey = new NamespacedKey(plugin, recipeKey);
+        if (registeredKeys.contains(namespacedKey)) {
+            Bukkit.removeRecipe(namespacedKey);
+            registeredKeys.remove(namespacedKey);
+            registerRecipe(updatedRecipe);
+        }
+
+        // Save to config
+        saveRecipeToFile(updatedRecipe);
+
+        plugin.debug("Updated result item for recipe: " + recipeKey);
+        return true;
+    }
+
+    private void saveRecipeToFile(CustomRecipe recipe) {
+        try {
+            Map<String, Object> recipeData = new HashMap<>();
+
+            // Save all recipe data
+            if (recipe.getGuiName() != null) {
+                recipeData.put("gui-name", recipe.getGuiName());
+            }
+            if (recipe.getGuiDescription() != null && !recipe.getGuiDescription().isEmpty()) {
+                recipeData.put("gui-description", recipe.getGuiDescription());
+            }
+            if (recipe.getCraftedName() != null) {
+                recipeData.put("crafted-name", recipe.getCraftedName());
+            }
+            if (recipe.getCraftedDescription() != null && !recipe.getCraftedDescription().isEmpty()) {
+                recipeData.put("crafted-description", recipe.getCraftedDescription());
+            }
+
+            recipeData.put("type", recipe.getType().name());
+            recipeData.put("hidden", recipe.isHidden());
+
+            // Save GUI fields
+            if (recipe.getGuiName() != null && !recipe.getGuiName().isEmpty()) {
+                recipeData.put("gui-name", recipe.getGuiName());
+            }
+            if (recipe.getGuiDescription() != null && !recipe.getGuiDescription().isEmpty()) {
+                recipeData.put("gui-description", recipe.getGuiDescription());
+            }
+
+            // Save Crafted fields
+            if (recipe.getCraftedName() != null && !recipe.getCraftedName().isEmpty()) {
+                recipeData.put("crafted-name", recipe.getCraftedName());
+            }
+            if (recipe.getCraftedDescription() != null && !recipe.getCraftedDescription().isEmpty()) {
+                recipeData.put("crafted-description", recipe.getCraftedDescription());
+            }
+
+            // Save recipe pattern
+            if (recipe.getType() == RecipeType.SHAPED) {
+                String[] pattern = recipe.getRecipeData().toShapeArray();
+                List<String> patternList = new ArrayList<>();
+
+                // Convert to config format
+                for (String row : pattern) {
+                    StringBuilder rowBuilder = new StringBuilder();
+                    Map<Character, Material> ingredients = recipe.getRecipeData().getIngredientMap();
+
+                    for (char c : row.toCharArray()) {
+                        if (c == ' ') {
+                            rowBuilder.append("AIR ");
+                        } else {
+                            Material mat = ingredients.get(c);
+                            rowBuilder.append(mat.name()).append(" ");
+                        }
+                    }
+                    patternList.add(rowBuilder.toString().trim());
+                }
+                recipeData.put("recipe", patternList);
+            } else {
+                recipeData.put("ingredients", recipe.getShapelessData().toConfigList());
+            }
+
+            // Save result item
+            Map<String, Object> resultData = ItemStackSerializer.toMap(recipe.getResultItem());
+            recipeData.put("result", resultData);
+            recipeData.put("material", recipe.getResultMaterial().name());
+            recipeData.put("amount", recipe.getResultAmount());
+
+            // Save to file
+            plugin.getConfigManager().getRecipeFileManager().saveRecipe(recipe.getKey(), recipeData);
+
+        } catch (Exception e) {
+            plugin.getLogger().severe("Failed to save recipe: " + e.getMessage());
+        }
     }
 
     /**

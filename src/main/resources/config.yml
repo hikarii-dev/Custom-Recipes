@@ -2,7 +2,7 @@
 # CustomRecipes Configuration
 # ========================================
 # Author: hikarii
-# Version: 1.0.0
+# Version: 1.1.2
 # Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option
 #
 # For material names, see:
@@ -28,6 +28,30 @@ use-crafted-custom-names: true
 # If true, spawned mobs will have the custom name from the crafted egg (uses crafted-name)
 # If false, spawned mobs will have default names
 spawn-egg-keep-custom-name: false
+
+# Ignore metadata/NBT when checking recipe ingredients
+# If true, damaged items and items with custom NBT can be used
+ignore-metadata: false
+
+# World restrictions for recipes
+world-restrictions:
+  enabled: false
+  # List of worlds where ALL recipes are disabled by default
+  disabled-worlds: []
+  # Example:
+  # disabled-worlds:
+  #   - world_nether
+  #   - world_the_end
+
+# Per-recipe world settings
+# Override global settings for specific recipes
+recipe-world-settings:
+# Example:
+# DiamondFromCoal:
+#   disabled-worlds:
+#     - creative_world
+#     - pvp_arena
+#   override-global: true  # If true, ignores global restrictions
 
 # List of enabled recipe keys
 # Add or remove recipe keys here to enable/disable specific recipes
