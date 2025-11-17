@@ -177,12 +177,12 @@ This plugin supports **MiniMessage** format for text coloring:
 
 ## Roadmap
 
-### Completed ✅
-- [✅] **Shapeless Recipes** - Support for recipes without specific patterns
-- [✅] **Recipe Editor GUI** - In-game recipe creation interface
-- [✅] **Recipe Export/Import** - Recipes saved as individual files
-- [✅] **Per-World Recipes** - Enable/disable recipes per world
-- [✅] **Hidden Recipes** - Discoverable recipes system
+### Completed
+- [✨] **Shapeless Recipes** - Support for recipes without specific patterns
+- [✨] **Recipe Editor GUI** - In-game recipe creation interface
+- [✨] **Recipe Export/Import** - Recipes saved as individual files
+- [✨] **Per-World Recipes** - Enable/disable recipes per world
+- [✨] **Hidden Recipes** - Discoverable recipes system
 
 ### Planned Features
 - [ ] **Furnace Recipes** - Custom smelting recipes
