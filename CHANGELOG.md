@@ -5,6 +5,146 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.5.0] MAJOR UPDATE - 2025-11-21
+
+### Added
+- **Vanilla Recipe Editor** - Complete vanilla Minecraft recipe customization system
+  - 801 vanilla recipes fully integrated (Crafting Table recipes)
+  - Recipe pattern modification with preview
+  - Support for multi-ingredient variants (e.g. different wood types)
+  - Per-variant result customization (e.g. Suspicious Stew effects)
+  - Disable/enable individual vanilla recipes
+  - Recipe search system with partial name matching
+  - Category filtering (Building, Decorations, Redstone, Transportation, Food, Tools, Combat, Brewing, Misc)
+  - Station filtering (more stations coming soon)
+  - Ingredient variant cycling for recipes with multiple options with visual numbered options
+  - Result item amount adjustment (left/right click)
+  - Reset to original vanilla recipe functionality
+
+- **Advanced Recipe Pattern Editor**
+  - Click-to-modify ingredient grid for shaped recipes
+  - Type toggle between Shaped/Shapeless for vanilla recipes
+  - Result item amount adjustment (left/right click)
+  - Pattern preview
+  - Multiple variant support per recipe (up to 10+ variants)
+
+- **Enhanced Item Editor** - Expanded customization options
+  - Enchantment Selector GUI - Dedicated menu for enchantment management
+    - All enchantments in searchable grid layout
+    - Visual level adjustment (left/right click)
+    - Max level enforcement per enchantment
+    - Quick max/reset with shift-click
+    - Enchantment compatibility + filter toggle/enable
+    - Enchantment descriptions and effects
+    - Visual indicators
+    - Enchantment visibility toggle (HIDE_ENCHANTS flag)
+  - NBT data editor with key-value pairs
+  - Custom Model Data configuration
+
+- **Recipe Pattern Editing for Custom Recipes**
+  - Edit existing custom recipe patterns
+  - Support for shaped and shapeless pattern changes
+  - Ingredient modification via crafting grid
+  - Result item amount adjustment (left/right click in edit mode)
+  - Save changes without recreating recipe
+  - Preserves recipe metadata and settings
+  - Visual indicators for edit mode
+
+- **Recipe List Enhancements**
+  - Edit Item Button - Quick result editing from list
+  - Direct access to item editor from recipe list
+  - Modify names, descriptions, enchantments without opening full editor
+  - Right-click context menu for quick actions
+
+- **Recipe Editor Improvements**
+  - Get Result Item button - Receive configured item + Sound feedback on item receive
+  - Items creating with all properties (NBT, enchantments, custom data)
+
+- **Global Recipe Management**
+  - Disable All Custom Recipes button in Settings 
+  - Enable All Custom Recipes button in Settings
+  - Disable All Vanilla Recipes button in Settings (801 recipes)
+  - Enable All Vanilla Recipes button in Settings (801 recipes)
+  - Recipe count display (enabled/disabled/total)
+
+- **Vanilla Recipe Migration System**
+  - Automatic version detection and migration
+  - Backup creation before updates
+  - Fallback for corrupted data
+  - Version tracking
+
+- **Update System Improvements**
+  - Periodic background update checks (every 30 minutes)
+  - Real-time notifications for admins whos online
+  - Automatic notification on new version discovery
+  - No server restart needed to detect updates
+
+- **Station Selector GUI** - Menu for choosing crafting station before recipe creation
+  - Visual station selection with icons: Crafting Table, Furnace, Blast Furnace, Smoker, Stonecutter, Brewing Stand, Smithing Table, Anvil, Loom
+  - "Coming soon" indicators for disabled stations
+  - Grid size display per station
+  - Glow effect on available stations
+  - Station descriptions and status messages
+
+- **Exact Item Matching for Recipe Ingredients** - Advanced crafting requirements
+  - Durability/Damage support for tools and armor in recipes
+  - Full enchantment matching for weapons and tools as ingredients
+  - Stored enchantments support for enchanted books as ingredients
+  - NBT/metadata matching in crafting grid
+  - CustomModelData matching for resource pack items
+
+### Changed
+- **Recipe Editor GUI** - Complete redesign
+  - Added "Edit Recipe Pattern" button for custom recipes
+  - New edit mode with separate save/cancel buttons
+  - Live grid editing with amount adjustment
+  - Result item editing moved to dedicated button
+  - Toggle system between view/edit modes
+  - Better visual feedback for editing state
+  - Hidden/Visible recipe toggle
+
+- **Vanilla Recipe Storage**
+  - Individual YAML+JSON files per modified vanilla recipe
+  - Variant-based pattern storage structure
+  - Multi-variant support in vanilla-recipes.yml
+
+- **Recipe List GUI** - Enhanced display
+  - Plain text names without formatting artifacts
+  - MiniMessage color preservation for custom names
+  - Proper name/description extraction from ItemMeta
+  - Status indicators (Enabled/Modified/Disabled)
+  - Color-coded recipe names (Green/Yellow/Red)
+  - Enhanced special properties display (enchantments, NBT, model data)
+  - World restrictions shown in lore
+
+- **Settings GUI** - Enhanced organization
+  - Dedicated buttons for custom recipe management
+  - Dedicated buttons for vanilla recipe management
+  - World restriction status properly reflects active restrictions
+  - Dimension-based world toggles (Overworld/Nether/End)
+  - Visual counters for enabled/disabled recipes
+  - Warning messages for bulk operations
+
+- **Recipe Amount System**
+  - Multi-ingredient amount support in shaped recipes
+  - Visual amount display in recipe grids
+  - Proper ingredient consumption for amounts > 1
+  - Amount preservation during recipe editing
+
+- **Command System Simplification**
+  - Removed /cr list command (use GUI instead)
+  - Removed /cr enable command (use GUI instead)
+  - Removed /cr disable command (use GUI instead)
+  - Removed /cr delete command (use GUI instead)
+  - Kept only: /cr gui, /cr reload, /cr help
+
+- **Item Property Handling**
+  - ItemFlags preserved across all operations
+  - HIDE_ENCHANTS flag properly applied and saved
+  - Full ItemMeta cloning in all editors
+  - Enchantment visibility controllable per item
+
 ## [1.1.2] - 2025-11-17
 
 ### Added
