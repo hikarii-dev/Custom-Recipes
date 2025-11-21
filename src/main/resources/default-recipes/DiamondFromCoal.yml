@@ -1,0 +1,11 @@
+name: "<aqua>Compressed Diamond"
+description:
+  - "<gray>Extremely compressed coal"
+  - "<green>Creates 1 diamond"
+recipe:
+  - "COAL_BLOCK COAL_BLOCK COAL_BLOCK"
+  - "COAL_BLOCK DIAMOND COAL_BLOCK"
+  - "COAL_BLOCK COAL_BLOCK COAL_BLOCK"
+material: DIAMOND
+hidden: false
+amount: 1

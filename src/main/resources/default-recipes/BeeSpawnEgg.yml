@@ -1,0 +1,11 @@
+name: "<yellow>Bee Spawn Egg"
+description:
+  - "<gray>Craft using honey bottles"
+  - "<gold>Place to spawn a bee!"
+recipe:
+  - "HONEY_BOTTLE HONEY_BOTTLE HONEY_BOTTLE"
+  - "HONEY_BOTTLE CLOCK HONEY_BOTTLE"
+  - "HONEY_BOTTLE HONEY_BOTTLE HONEY_BOTTLE"
+material: BEE_SPAWN_EGG
+hidden: false
+amount: 1

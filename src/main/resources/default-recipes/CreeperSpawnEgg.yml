@@ -1,0 +1,11 @@
+name: "<green>Creeper Spawn Egg"
+description:
+  - "<gray>Craft using gunpowder"
+  - "<red>⚠ Explosive! Handle with care"
+recipe:
+  - "GUNPOWDER GUNPOWDER GUNPOWDER"
+  - "GUNPOWDER CLOCK GUNPOWDER"
+  - "GUNPOWDER GUNPOWDER GUNPOWDER"
+material: CREEPER_SPAWN_EGG
+hidden: false
+amount: 1

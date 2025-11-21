@@ -1,0 +1,71 @@
+# ===========================
+# CustomRecipes Configuration
+# ===========================
+# DO NOT EDIT THIS LINE
+config-version: 2
+# Author: hikarii
+# Version: 1.5.0
+# Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option!
+#
+# For any help join discord: https://discord.gg/ChTjgTqw3T
+# For material names, see:
+# https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+
+# Enable/disable debug mode
+debug: false
+
+# Enable/disable admin notifications (recipe created, deleted, updated, etc.)
+admin-notifications: true
+
+# Use custom names and descriptions on crafted items
+# If true, crafted items will have custom names/lore defined in crafted-name/crafted-description
+# If false, crafted items will be vanilla (no custom names/lore)
+use-crafted-custom-names: true
+
+# Keep custom names on spawn eggs when they spawn mobs
+# If true, spawned mobs will have the custom name from the crafted egg (uses crafted-name)
+# If false, spawned mobs will have default names
+spawn-egg-keep-custom-name: false
+
+# Ignore metadata/NBT when checking recipe ingredients
+# If true, damaged items and items with custom NBT can be used
+ignore-metadata: false
+
+# World restrictions for recipes
+world-restrictions:
+  enabled: false
+  # List of worlds where ALL recipes are disabled by default
+  disabled-worlds: []
+  # Example:
+  # disabled-worlds:
+  #   - world_nether
+  #   - world_the_end
+
+# Per-recipe world settings
+# Override global settings for specific recipes
+recipe-world-settings: {}
+# Example:
+# DiamondFromCoal:
+#   disabled-worlds:
+#     - creative_world
+#     - pvp_arena
+#   override-global: true  # If true, ignores global restrictions
+
+# List of enabled recipe keys
+# Default recipes are automatically added on first run
+enabled-recipes:
+  - BeeSpawnEgg
+  - CowSpawnEgg
+  - CreeperSpawnEgg
+  - EndermanSpawnEgg
+  - SkeletonSpawnEgg
+  - ZombieSpawnEgg
+  - DiamondFromCoal
+  - EnderPearlStack
+  - GoldenAppleStack
+
+# ========================================
+# All recipes are stored in /recipes/ folder
+# Create new recipes using /cr gui
+# Default recipes are loaded from plugin jar
+# ========================================
