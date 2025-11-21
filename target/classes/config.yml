@@ -1,23 +1,21 @@
-# ========================================
+# ===========================
 # CustomRecipes Configuration
-# ========================================
+# ===========================
+# DO NOT EDIT THIS LINE
+config-version: 2
 # Author: hikarii
-# Version: 1.1.2
-# Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option
+# Version: 1.5.0
+# Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option!
 #
+# For any help join discord: https://discord.gg/ChTjgTqw3T
 # For material names, see:
 # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-# ========================================
 
-# Enable debug mode
+# Enable/disable debug mode
 debug: false
 
-# Update checker settings
-update-checker:
-  enabled: true
-  source: GITHUB
-  spigot-resource-id: "130198"
-  github-repo: "hikarii-dev/Custom-Recipes"
+# Enable/disable admin notifications (recipe created, deleted, updated, etc.)
+admin-notifications: true
 
 # Use custom names and descriptions on crafted items
 # If true, crafted items will have custom names/lore defined in crafted-name/crafted-description
@@ -45,7 +43,7 @@ world-restrictions:
 
 # Per-recipe world settings
 # Override global settings for specific recipes
-recipe-world-settings:
+recipe-world-settings: {}
 # Example:
 # DiamondFromCoal:
 #   disabled-worlds:
@@ -54,7 +52,7 @@ recipe-world-settings:
 #   override-global: true  # If true, ignores global restrictions
 
 # List of enabled recipe keys
-# Add or remove recipe keys here to enable/disable specific recipes
+# Default recipes are automatically added on first run
 enabled-recipes:
   - BeeSpawnEgg
   - CowSpawnEgg
@@ -67,161 +65,7 @@ enabled-recipes:
   - GoldenAppleStack
 
 # ========================================
-# Recipe Definitions
+# All recipes are stored in /recipes/ folder
+# Create new recipes using /cr gui
+# Default recipes are loaded from plugin jar
 # ========================================
-#
-# Recipe Format:
-# <RecipeKey>:
-#   gui-name: "Name in GUI"       # Always shown in recipe browser GUI
-#   gui-description:              # Always shown in recipe browser GUI
-#     - "Line 1"
-#     - "Line 2"
-#   crafted-name: "Name on item"  # (Optional) Name on crafted item
-#   crafted-description:          # (Optional) Lore on crafted item
-#     - "Line 1"
-#     - "Line 2"
-#   type: SHAPED                  # Recipe type (currently only SHAPED is supported)
-#   recipe:                       # 3x3 crafting grid pattern
-#     - ITEM ITEM ITEM            # Top row
-#     - ITEM ITEM ITEM            # Middle row
-#     - ITEM ITEM ITEM            # Bottom row
-#   material: RESULT_ITEM         # The resulting item
-#   hidden: false                 # Hide recipe from REI, JEI mods
-#   amount: 1                     # (Optional) Amount crafted (1-64), default: 1
-#
-# Note: If use-crafted-custom-names is disabled, only gui-name/gui-description
-#       will be used (in GUI only). Crafted items will be vanilla.
-#
-# ========================================
-
-# === Spawn Egg Recipes ===
-
-BeeSpawnEgg:
-  gui-name: "<yellow>Bee Spawn Egg"
-  gui-description:
-    - "<gray>Craft using honey bottles"
-    - "<gold>Place to spawn a bee!"
-  crafted-name: "<yellow>Bee Spawn Egg"
-  crafted-description:
-    - "<gray>Craft using honey bottles"
-    - "<gold>Place to spawn a bee!"
-  recipe:
-    - HONEY_BOTTLE HONEY_BOTTLE HONEY_BOTTLE
-    - HONEY_BOTTLE CLOCK HONEY_BOTTLE
-    - HONEY_BOTTLE HONEY_BOTTLE HONEY_BOTTLE
-  material: BEE_SPAWN_EGG
-  hidden: false
-  amount: 1
-
-CowSpawnEgg:
-  gui-name: "<white>Cow Spawn Egg"
-  gui-description:
-    - "<gray>Craft using beef"
-    - "<gold>Place to spawn a cow!"
-  recipe:
-    - BEEF BEEF BEEF
-    - BEEF CLOCK BEEF
-    - BEEF BEEF BEEF
-  material: COW_SPAWN_EGG
-  hidden: false
-  amount: 1
-
-CreeperSpawnEgg:
-  gui-name: "<green>Creeper Spawn Egg"
-  gui-description:
-    - "<gray>Craft using gunpowder"
-    - "<red>⚠ Explosive! Handle with care"
-  recipe:
-    - GUNPOWDER GUNPOWDER GUNPOWDER
-    - GUNPOWDER CLOCK GUNPOWDER
-    - GUNPOWDER GUNPOWDER GUNPOWDER
-  material: CREEPER_SPAWN_EGG
-  hidden: false
-  amount: 1
-
-EndermanSpawnEgg:
-  gui-name: "<dark_purple>Enderman Spawn Egg"
-  gui-description:
-    - "<gray>Craft using ender pearls"
-    - "<gold>Place to spawn an enderman!"
-  recipe:
-    - ENDER_PEARL ENDER_PEARL ENDER_PEARL
-    - ENDER_PEARL CLOCK ENDER_PEARL
-    - ENDER_PEARL ENDER_PEARL ENDER_PEARL
-  material: ENDERMAN_SPAWN_EGG
-  hidden: false
-  amount: 1
-
-SkeletonSpawnEgg:
-  gui-name: "<white>Skeleton Spawn Egg"
-  gui-description:
-    - "<gray>Craft using bones"
-    - "<gold>Place to spawn a skeleton!"
-  recipe:
-    - BONE BONE BONE
-    - BONE CLOCK BONE
-    - BONE BONE BONE
-  material: SKELETON_SPAWN_EGG
-  hidden: false
-  amount: 1
-
-ZombieSpawnEgg:
-  gui-name: "<green>Zombie Spawn Egg"
-  gui-description:
-    - "<gray>Craft using rotten flesh"
-    - "<gold>Place to spawn a zombie!"
-  recipe:
-    - ROTTEN_FLESH ROTTEN_FLESH ROTTEN_FLESH
-    - ROTTEN_FLESH CLOCK ROTTEN_FLESH
-    - ROTTEN_FLESH ROTTEN_FLESH ROTTEN_FLESH
-  material: ZOMBIE_SPAWN_EGG
-  hidden: false
-  amount: 1
-
-# === Utility Recipes ===
-
-DiamondFromCoal:
-  gui-name: "<aqua>Compressed Diamond"
-  gui-description:
-    - "<gray>Extremely compressed coal"
-    - "<green>Creates 1 diamond"
-  crafted-name: "<aqua>Compressed Diamond"
-  crafted-description:
-    - "<gray>Made from compressed coal"
-  recipe:
-    - COAL_BLOCK COAL_BLOCK COAL_BLOCK
-    - COAL_BLOCK DIAMOND COAL_BLOCK
-    - COAL_BLOCK COAL_BLOCK COAL_BLOCK
-  material: DIAMOND
-  hidden: false
-  amount: 1
-
-EnderPearlStack:
-  gui-name: "<dark_purple>Ender Pearl Stack"
-  gui-description:
-    - "<gray>Bulk ender pearl crafting"
-    - "<gold>Creates 16 ender pearls"
-  recipe:
-    - ENDER_EYE ENDER_EYE ENDER_EYE
-    - ENDER_EYE ENDER_PEARL ENDER_EYE
-    - ENDER_EYE ENDER_EYE ENDER_EYE
-  material: ENDER_PEARL
-  hidden: false
-  amount: 16
-
-GoldenAppleStack:
-  gui-name: "<gold>Golden Apple Stack"
-  gui-description:
-    - "<gray>Bulk golden apple crafting"
-    - "<yellow>Creates 8 golden apples"
-  recipe:
-    - GOLD_BLOCK GOLD_BLOCK GOLD_BLOCK
-    - GOLD_BLOCK APPLE GOLD_BLOCK
-    - GOLD_BLOCK GOLD_BLOCK GOLD_BLOCK
-  material: GOLDEN_APPLE
-  hidden: false
-  amount: 8
-
-# =================================
-# Add your own custom recipes below
-# =================================

@@ -1,5 +1,5 @@
 name: CustomRecipes
-version: '1.1.2'
+version: '1.5.0'
 main: org.hikarii.customrecipes.CustomRecipes
 api-version: '1.21'
 author: hikarii
@@ -14,40 +14,35 @@ website:
 commands:
   customrecipes:
     description: Main CustomRecipes command
-    usage: /customrecipes <help|reload|list|gui>
+    usage: /customrecipes <list|help|reload|gui>
     aliases: [cr, crecipes, customrecipe]
-    permission: customrecipes.use
 
 permissions:
   customrecipes.*:
     description: Grants all CustomRecipes permissions
     default: op
     children:
-      customrecipes.use: true
       customrecipes.reload: true
-      customrecipes.list: true
       customrecipes.gui: true
       customrecipes.manage: true
-
-  customrecipes.use:
-    description: Allows use of basic CustomRecipes commands
-    default: true
+      customrecipes.list: true
+      customrecipes.update.notify: true
 
   customrecipes.reload:
     description: Allows reloading the plugin configuration
     default: op
 
-  customrecipes.list:
-    description: Allows viewing the list of custom recipes
-    default: true
-
   customrecipes.gui:
-    description: Allows opening the recipe management GUI
-    default: true
+    description: Allows opening the recipe management GUI (admin only)
+    default: op
 
   customrecipes.manage:
     description: Allows enabling, disabling, and deleting recipes
     default: op
+
+  customrecipes.list:
+    description: Allows viewing all custom recipes
+    default: true
 
   customrecipes.update.notify:
     description: Receive update notifications on join
