@@ -6,6 +6,157 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.0.0] MAJOR UPDATE - 2025-11-25
+
+### Added
+
+#### Furnace Recipes - Complete custom smelting system
+- **Custom Furnace Recipe Creator** - Create custom smelting recipes in-game
+  - Visual input/fuel/result slots with drag-and-drop interface
+  - Custom fuel support (use any item as fuel, not just coal/lava buckets)
+  - Burn time configuration with visual slider (ticks/seconds display)
+  - Experience reward configuration
+  - Smelting conditions (XP requirement, permission, money cost, cooldown, usage limits)
+  - Craft Events support (sounds, particles, commands triggered on smelt completion)
+  - Random Results support with %chance outcomes
+  - Failure Chance system (0-100% chance to fail and produce nothing while crafting/smelting)
+
+- **Smelting Conditions GUI** - Advanced furnace recipe requirements
+  - Experience level requirement to use recipe
+  - Permission requirement
+  - Money cost per smelt (Vault integration)
+  - Cooldown system with per-player timer
+  - Daily/Weekly/Total usage limits per player
+  - XP reward granted on successful smelt
+  - Custom cooking time configuration (in ticks)
+
+- **Furnace Recipe Editor** - Modify existing furnace recipes
+  - All creator features available for editing
+  - Visual pattern preview and modification
+  - Conditions configuration access
+  - World restrictions support
+
+#### Random Results System - Multiple weighted outcomes
+- **Random Results GUI** - Configure probability-based outcomes
+  - Add up to 27 different possible results per recipe
+  - Chance-based probability system
+  - Visual chance adjustment (left/right click, shift for ×10)
+  - "Show Chances" toggle to display percentages in recipe browser
+  - **Failure Chance** - Configure 0-100% chance for craft/smelt to completely fail
+  - Failure message shown to player when craft fails
+  - Support for both Crafting Table (shaped/shapeless) and Furnace recipes
+  - Per-variant item customization with Variant Switcher integration
+
+- **Random Results Viewer GUI** - Display possible outcomes to players
+  - Shows all possible results with their probabilities
+  - Percentage display for each outcome
+  - Visual indicators for failure chance
+  - Integrated into recipe viewer
+
+#### Craft Events System - Actions triggered on recipe use
+- **Craft Events Menu** - Configure events executed when recipe is crafted/smelted
+  - **Sounds** - Play custom sounds to player (adjustable pitch 0.1-2.0, volume 0.1-2.0)
+  - **Particles** - Spawn particle effects at player location (count, offset X/Y/Z, speed)
+  - **Commands** - Execute console commands with placeholder support
+    - {player} - Player name who crafted
+    - {recipe_key} - Recipe identifier
+  - Individual enable/disable toggles for each event type
+  - Works for both Crafting Table and Furnace recipes
+
+- **Craft Event Presets System** - Reusable event configurations
+  - Save combinations of sounds/particles/commands as named presets
+  - Apply presets to multiple recipes instantly
+  - Preset Selector GUI with preview of preset contents
+  - Preset Editor for modifying existing presets
+  - Share common event configurations across recipes
+
+- **Sound Selector GUI** - Browse and configure all Minecraft sounds
+  - Paginated list of all available sounds
+  - Search functionality (coming soon)
+  - Test play button to preview sounds
+  - Volume slider (0.1-2.0) with visual adjustment
+  - Pitch slider (0.1-2.0) for sound variation
+  - Left/right click adjustment with shift for ×10
+
+- **Particle Selector GUI** - Browse and configure all Minecraft particles
+  - Paginated list of all particle types
+  - Test spawn button to preview particles
+  - Count adjustment (1-100 particles)
+  - Offset X/Y/Z sliders for spread area
+  - Speed adjustment for particle velocity
+  - Visual configuration with live preview
+
+- **Command Editor GUI** - Manage multiple commands per recipe
+  - Add unlimited commands to single recipe
+  - Remove commands dynamically
+  - Full placeholder support: {player}, {recipe_key}
+  - Commands execute from console (bypass permissions)
+  - Commands run in order defined
+
+#### Item Editor Major Enhancements
+- **Variant Switcher System** - Edit each random result independently
+  - Chest button in Item Editor to cycle through variants
+  - Per-variant enchantments, flags, names, descriptions, NBT data, craft events
+  - Visual variant counter display (e.g., "1/3", "2/3", "3/3")
+  - State preservation when navigating to sub-menus (enchantments, flags, craft events)
+  - Seamless integration with Random Results system
+  - Each variant can have completely different properties
+
+- **Item Flags Support** - Complete ItemFlag configuration
+  - HIDE_ENCHANTS - Hide enchantment list from tooltip
+  - HIDE_ATTRIBUTES - Hide attribute modifiers
+  - HIDE_UNBREAKABLE - Hide unbreakable tag
+  - HIDE_DESTROYS - Hide "Can Destroy" block list
+  - HIDE_PLACED_ON - Hide "Can Place On" block list
+  - HIDE_POTION_EFFECTS - Hide potion effect tooltips
+  - HIDE_DYE - Hide dye color on leather armor
+  - HIDE_ARMOR_TRIM - Hide armor trim patterns
+  - HIDE_ADDITIONAL_TOOLTIP - Hide additional tooltip information
+  - Dedicated Flags Selector GUI with visual toggle buttons
+  - Works independently per variant when using Random Results
+
+#### Multi-Language Support System
+- **4 Complete Language Translations**
+  - English (en_US) - Default language
+  - Russian (ru_RU) - Complete translation
+  - Ukrainian (uk_UA) - Complete translation
+  - German (de_DE) - Complete translation
+  - All GUI elements, messages, and tooltips translated
+  - Consistent terminology across all languages
+
+- **Language Selector GUI** - In-game language switching
+  - Visual flag icons for each language
+  - Player-specific language preference storage
+  - Instant language change without restart
+  - Automatic fallback to English for missing translation keys
+  - Located in plugin settings menu
+
+### Changed
+
+#### Vanilla Recipe System Major Fixes
+- **Result Amount Application** - Fixed custom amounts not applying
+  - Furnace recipes now properly apply custom result amounts during smelting
+  - Per-variant amount tracking for recipes with ingredient variants
+  - Recipe list GUI now shows correct modified amounts
+  - Both display and actual smelting results now use custom amounts
+
+- **Ingredient Validation System** - Better error reporting
+  - Invalid ingredients now log warnings instead of silent failures
+  - Furnace recipes use `warning()` instead of `debug()` for visibility
+  - Variant results with invalid materials now properly logged
+  - Recipes with all-invalid ingredient options are rejected with explanation
+  - Users can now see which recipes failed to load and why
+
+- **Recipe Creator Variant Integration** - Edit variants during creation
+  - RecipeCreatorGUI detects random results and enables variant switcher
+  - FurnaceRecipeCreatorGUI supports variant editing during setup
+  - Edit each random result item's properties before saving recipe
+  - No need to edit recipe after creation
+
+### Fixed
+
+- **Critical Bug Fixes** - all bug's fixed!
+
 ## [1.5.0] MAJOR UPDATE - 2025-11-21
 
 ### Added
