@@ -1,0 +1,11 @@
+name: "<dark_purple>Ender Pearl Stack"
+description:
+  - "<gray>Bulk ender pearl crafting"
+  - "<gold>Creates 16 ender pearls"
+recipe:
+  - "ENDER_EYE ENDER_EYE ENDER_EYE"
+  - "ENDER_EYE ENDER_PEARL ENDER_EYE"
+  - "ENDER_EYE ENDER_EYE ENDER_EYE"
+material: ENDER_PEARL
+hidden: false
+amount: 16

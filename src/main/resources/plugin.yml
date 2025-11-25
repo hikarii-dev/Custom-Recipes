@@ -1,0 +1,59 @@
+name: CustomRecipes
+version: '2.0.0'
+main: org.hikarii.customrecipes.CustomRecipes
+api-version: '1.18'
+author: hikarii
+description: Create your own custom Crafting, Furnace, Anvil, and other recipes with tons of configuration option
+website:
+  https://discord.gg/ChTjgTqw3T
+  https://modrinth.com/user/hikarii-dev
+  https://www.spigotmc.org/members/hikarii.2411622/
+  https://hangar.papermc.io/hikarii/Custom-Recipes
+  https://github.com/hikarii-dev
+
+commands:
+  customrecipes:
+    description: Main CustomRecipes command
+    usage: /customrecipes <list|help|reload|gui>
+    aliases: [cr, crecipes, customrecipe]
+
+permissions:
+  customrecipes.*:
+    description: Grants all CustomRecipes permissions
+    default: op
+    children:
+      customrecipes.reload: true
+      customrecipes.gui: true
+      customrecipes.manage: true
+      customrecipes.list: true
+      customrecipes.list.all: true
+      customrecipes.help: true
+      customrecipes.update.notify: true
+
+  customrecipes.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+
+  customrecipes.gui:
+    description: Allows opening the recipe creation GUI (admin only)
+    default: op
+
+  customrecipes.manage:
+    description: Allows enabling, disabling, and deleting recipes
+    default: op
+
+  customrecipes.list:
+    description: Allows viewing custom recipes list
+    default: true
+
+  customrecipes.list.all:
+    description: Allows viewing ALL recipes (without this, only available/unlocked recipes shown)
+    default: op
+
+  customrecipes.help:
+    description: Allows using /cr help command
+    default: true
+
+  customrecipes.update.notify:
+    description: Receive update notifications on join
+    default: op

@@ -1,0 +1,11 @@
+name: "<white>Skeleton Spawn Egg"
+description:
+  - "<gray>Craft using bones"
+  - "<gold>Place to spawn a skeleton!"
+recipe:
+  - "BONE BONE BONE"
+  - "BONE CLOCK BONE"
+  - "BONE BONE BONE"
+material: SKELETON_SPAWN_EGG
+hidden: false
+amount: 1

@@ -1,0 +1,11 @@
+name: "<white>Cow Spawn Egg"
+description:
+  - "<gray>Craft using beef"
+  - "<gold>Place to spawn a cow!"
+recipe:
+  - "BEEF BEEF BEEF"
+  - "BEEF CLOCK BEEF"
+  - "BEEF BEEF BEEF"
+material: COW_SPAWN_EGG
+hidden: false
+amount: 1

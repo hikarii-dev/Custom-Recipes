@@ -1,0 +1,11 @@
+name: "<dark_purple>Enderman Spawn Egg"
+description:
+  - "<gray>Craft using ender pearls"
+  - "<gold>Place to spawn an enderman!"
+recipe:
+  - "ENDER_PEARL ENDER_PEARL ENDER_PEARL"
+  - "ENDER_PEARL CLOCK ENDER_PEARL"
+  - "ENDER_PEARL ENDER_PEARL ENDER_PEARL"
+material: ENDERMAN_SPAWN_EGG
+hidden: false
+amount: 1

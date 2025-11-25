@@ -1,0 +1,11 @@
+name: "<green>Zombie Spawn Egg"
+description:
+  - "<gray>Craft using rotten flesh"
+  - "<gold>Place to spawn a zombie!"
+recipe:
+  - "ROTTEN_FLESH ROTTEN_FLESH ROTTEN_FLESH"
+  - "ROTTEN_FLESH CLOCK ROTTEN_FLESH"
+  - "ROTTEN_FLESH ROTTEN_FLESH ROTTEN_FLESH"
+material: ZOMBIE_SPAWN_EGG
+hidden: false
+amount: 1

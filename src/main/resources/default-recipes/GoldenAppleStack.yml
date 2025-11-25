@@ -1,0 +1,11 @@
+name: "<gold>Golden Apple Stack"
+description:
+  - "<gray>Bulk golden apple crafting"
+  - "<yellow>Creates 8 golden apples"
+recipe:
+  - "GOLD_BLOCK GOLD_BLOCK GOLD_BLOCK"
+  - "GOLD_BLOCK APPLE GOLD_BLOCK"
+  - "GOLD_BLOCK GOLD_BLOCK GOLD_BLOCK"
+material: GOLDEN_APPLE
+hidden: false
+amount: 8

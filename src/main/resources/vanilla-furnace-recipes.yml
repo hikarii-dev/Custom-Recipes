@@ -1,0 +1,545 @@
+# Vanilla Minecraft Furnace Recipes
+# Version: 1.18.2 - 1.21.10
+# DO NOT EDIT THIS LINE
+vanilla-furnace-recipes-version: 3
+# Format:
+# recipe_key:
+#   name: "Display Name"
+#   input: INPUT_MATERIAL (or MATERIAL1|MATERIAL2|... for variants)
+#   result: RESULT_MATERIAL
+#   amount: 1
+#   experience: 0.1
+#   cooking_time: 200  # in ticks (200 = 10 seconds)
+#   category: FOOD / BUILDING / MISC
+
+recipes:
+  # === ORES AND MATERIALS ===
+  iron_ingot:
+    name: "Iron Ingot"
+    input: RAW_IRON|IRON_ORE|DEEPSLATE_IRON_ORE
+    result: IRON_INGOT
+    amount: 1
+    experience: 0.7
+    cooking_time: 200
+    category: MISC
+
+  gold_ingot:
+    name: "Gold Ingot"
+    input: RAW_GOLD|GOLD_ORE|DEEPSLATE_GOLD_ORE|NETHER_GOLD_ORE
+    result: GOLD_INGOT
+    amount: 1
+    experience: 1.0
+    cooking_time: 200
+    category: MISC
+
+  copper_ingot:
+    name: "Copper Ingot"
+    input: RAW_COPPER|COPPER_ORE|DEEPSLATE_COPPER_ORE
+    result: COPPER_INGOT
+    amount: 1
+    experience: 0.7
+    cooking_time: 200
+    category: MISC
+
+  diamond:
+    name: "Diamond"
+    input: DIAMOND_ORE|DEEPSLATE_DIAMOND_ORE
+    result: DIAMOND
+    amount: 1
+    experience: 1.0
+    cooking_time: 200
+    category: MISC
+
+  emerald:
+    name: "Emerald"
+    input: EMERALD_ORE|DEEPSLATE_EMERALD_ORE
+    result: EMERALD
+    amount: 1
+    experience: 1.0
+    cooking_time: 200
+    category: MISC
+
+  lapis_lazuli:
+    name: "Lapis Lazuli"
+    input: LAPIS_ORE|DEEPSLATE_LAPIS_ORE
+    result: LAPIS_LAZULI
+    amount: 1
+    experience: 0.2
+    cooking_time: 200
+    category: MISC
+
+  redstone:
+    name: "Redstone"
+    input: REDSTONE_ORE|DEEPSLATE_REDSTONE_ORE
+    result: REDSTONE
+    amount: 1
+    experience: 0.3
+    cooking_time: 200
+    category: MISC
+
+  coal:
+    name: "Coal"
+    input: COAL_ORE|DEEPSLATE_COAL_ORE
+    result: COAL
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: MISC
+
+  quartz:
+    name: "Nether Quartz"
+    input: NETHER_QUARTZ_ORE
+    result: QUARTZ
+    amount: 1
+    experience: 0.2
+    cooking_time: 200
+    category: MISC
+
+  netherite_scrap:
+    name: "Netherite Scrap"
+    input: ANCIENT_DEBRIS
+    result: NETHERITE_SCRAP
+    amount: 1
+    experience: 2.0
+    cooking_time: 200
+    category: MISC
+
+  # === BUILDING BLOCKS ===
+  stone:
+    name: "Stone"
+    input: COBBLESTONE
+    result: STONE
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  smooth_stone:
+    name: "Smooth Stone"
+    input: STONE
+    result: SMOOTH_STONE
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  glass:
+    name: "Glass"
+    input: SAND|RED_SAND
+    result: GLASS
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  brick:
+    name: "Brick"
+    input: CLAY_BALL
+    result: BRICK
+    amount: 1
+    experience: 0.3
+    cooking_time: 200
+    category: BUILDING
+
+  terracotta:
+    name: "Terracotta"
+    input: CLAY
+    result: TERRACOTTA
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: BUILDING
+
+  nether_brick:
+    name: "Nether Brick"
+    input: NETHERRACK
+    result: NETHER_BRICK
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  cracked_stone_bricks:
+    name: "Cracked Stone Bricks"
+    input: STONE_BRICKS
+    result: CRACKED_STONE_BRICKS
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  cracked_deepslate_bricks:
+    name: "Cracked Deepslate Bricks"
+    input: DEEPSLATE_BRICKS
+    result: CRACKED_DEEPSLATE_BRICKS
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  cracked_deepslate_tiles:
+    name: "Cracked Deepslate Tiles"
+    input: DEEPSLATE_TILES
+    result: CRACKED_DEEPSLATE_TILES
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  cracked_nether_bricks:
+    name: "Cracked Nether Bricks"
+    input: NETHER_BRICKS
+    result: CRACKED_NETHER_BRICKS
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  cracked_polished_blackstone_bricks:
+    name: "Cracked Polished Blackstone Bricks"
+    input: POLISHED_BLACKSTONE_BRICKS
+    result: CRACKED_POLISHED_BLACKSTONE_BRICKS
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  deepslate:
+    name: "Deepslate"
+    input: COBBLED_DEEPSLATE
+    result: DEEPSLATE
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  smooth_sandstone:
+    name: "Smooth Sandstone"
+    input: SANDSTONE
+    result: SMOOTH_SANDSTONE
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  smooth_red_sandstone:
+    name: "Smooth Red Sandstone"
+    input: RED_SANDSTONE
+    result: SMOOTH_RED_SANDSTONE
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  smooth_quartz:
+    name: "Smooth Quartz"
+    input: QUARTZ_BLOCK
+    result: SMOOTH_QUARTZ
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  smooth_basalt:
+    name: "Smooth Basalt"
+    input: BASALT
+    result: SMOOTH_BASALT
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  sponge:
+    name: "Sponge"
+    input: WET_SPONGE
+    result: SPONGE
+    amount: 1
+    experience: 0.15
+    cooking_time: 200
+    category: BUILDING
+
+  dried_kelp:
+    name: "Dried Kelp"
+    input: KELP
+    result: DRIED_KELP
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: MISC
+
+  # === CHARCOAL (all logs and wood variants) ===
+  charcoal:
+    name: "Charcoal"
+    input: OAK_LOG|SPRUCE_LOG|BIRCH_LOG|JUNGLE_LOG|ACACIA_LOG|DARK_OAK_LOG|MANGROVE_LOG|CHERRY_LOG|OAK_WOOD|SPRUCE_WOOD|BIRCH_WOOD|JUNGLE_WOOD|ACACIA_WOOD|DARK_OAK_WOOD|MANGROVE_WOOD|CHERRY_WOOD|STRIPPED_OAK_LOG|STRIPPED_SPRUCE_LOG|STRIPPED_BIRCH_LOG|STRIPPED_JUNGLE_LOG|STRIPPED_ACACIA_LOG|STRIPPED_DARK_OAK_LOG|STRIPPED_MANGROVE_LOG|STRIPPED_CHERRY_LOG
+    result: CHARCOAL
+    amount: 1
+    experience: 0.15
+    cooking_time: 200
+    category: MISC
+
+  # === FOOD ===
+  cooked_beef:
+    name: "Steak"
+    input: BEEF
+    result: COOKED_BEEF
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  cooked_porkchop:
+    name: "Cooked Porkchop"
+    input: PORKCHOP
+    result: COOKED_PORKCHOP
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  cooked_chicken:
+    name: "Cooked Chicken"
+    input: CHICKEN
+    result: COOKED_CHICKEN
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  cooked_mutton:
+    name: "Cooked Mutton"
+    input: MUTTON
+    result: COOKED_MUTTON
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  cooked_rabbit:
+    name: "Cooked Rabbit"
+    input: RABBIT
+    result: COOKED_RABBIT
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  cooked_cod:
+    name: "Cooked Cod"
+    input: COD
+    result: COOKED_COD
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  cooked_salmon:
+    name: "Cooked Salmon"
+    input: SALMON
+    result: COOKED_SALMON
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  baked_potato:
+    name: "Baked Potato"
+    input: POTATO
+    result: BAKED_POTATO
+    amount: 1
+    experience: 0.35
+    cooking_time: 200
+    category: FOOD
+
+  # === DYES ===
+  lime_dye:
+    name: "Lime Dye"
+    input: SEA_PICKLE
+    result: LIME_DYE
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: MISC
+
+  green_dye:
+    name: "Green Dye"
+    input: CACTUS
+    result: GREEN_DYE
+    amount: 1
+    experience: 1.0
+    cooking_time: 200
+    category: MISC
+
+  # === GLAZED TERRACOTTA ===
+  white_glazed_terracotta:
+    name: "White Glazed Terracotta"
+    input: WHITE_TERRACOTTA
+    result: WHITE_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  orange_glazed_terracotta:
+    name: "Orange Glazed Terracotta"
+    input: ORANGE_TERRACOTTA
+    result: ORANGE_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  magenta_glazed_terracotta:
+    name: "Magenta Glazed Terracotta"
+    input: MAGENTA_TERRACOTTA
+    result: MAGENTA_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  light_blue_glazed_terracotta:
+    name: "Light Blue Glazed Terracotta"
+    input: LIGHT_BLUE_TERRACOTTA
+    result: LIGHT_BLUE_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  yellow_glazed_terracotta:
+    name: "Yellow Glazed Terracotta"
+    input: YELLOW_TERRACOTTA
+    result: YELLOW_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  lime_glazed_terracotta:
+    name: "Lime Glazed Terracotta"
+    input: LIME_TERRACOTTA
+    result: LIME_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  pink_glazed_terracotta:
+    name: "Pink Glazed Terracotta"
+    input: PINK_TERRACOTTA
+    result: PINK_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  gray_glazed_terracotta:
+    name: "Gray Glazed Terracotta"
+    input: GRAY_TERRACOTTA
+    result: GRAY_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  light_gray_glazed_terracotta:
+    name: "Light Gray Glazed Terracotta"
+    input: LIGHT_GRAY_TERRACOTTA
+    result: LIGHT_GRAY_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  cyan_glazed_terracotta:
+    name: "Cyan Glazed Terracotta"
+    input: CYAN_TERRACOTTA
+    result: CYAN_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  purple_glazed_terracotta:
+    name: "Purple Glazed Terracotta"
+    input: PURPLE_TERRACOTTA
+    result: PURPLE_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  blue_glazed_terracotta:
+    name: "Blue Glazed Terracotta"
+    input: BLUE_TERRACOTTA
+    result: BLUE_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  brown_glazed_terracotta:
+    name: "Brown Glazed Terracotta"
+    input: BROWN_TERRACOTTA
+    result: BROWN_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  green_glazed_terracotta:
+    name: "Green Glazed Terracotta"
+    input: GREEN_TERRACOTTA
+    result: GREEN_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  red_glazed_terracotta:
+    name: "Red Glazed Terracotta"
+    input: RED_TERRACOTTA
+    result: RED_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  black_glazed_terracotta:
+    name: "Black Glazed Terracotta"
+    input: BLACK_TERRACOTTA
+    result: BLACK_GLAZED_TERRACOTTA
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: BUILDING
+
+  # === MISC SMELTING ===
+  popped_chorus_fruit:
+    name: "Popped Chorus Fruit"
+    input: CHORUS_FRUIT
+    result: POPPED_CHORUS_FRUIT
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: MISC
+
+  # === ARMOR/TOOLS RECYCLING (gold nuggets) ===
+  gold_nugget:
+    name: "Gold Nugget"
+    input: GOLDEN_SWORD|GOLDEN_PICKAXE|GOLDEN_AXE|GOLDEN_SHOVEL|GOLDEN_HOE|GOLDEN_HELMET|GOLDEN_CHESTPLATE|GOLDEN_LEGGINGS|GOLDEN_BOOTS|GOLDEN_HORSE_ARMOR
+    result: GOLD_NUGGET
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: MISC
+
+  # === ARMOR/TOOLS RECYCLING (iron nuggets) ===
+  iron_nugget:
+    name: "Iron Nugget"
+    input: IRON_SWORD|IRON_PICKAXE|IRON_AXE|IRON_SHOVEL|IRON_HOE|IRON_HELMET|IRON_CHESTPLATE|IRON_LEGGINGS|IRON_BOOTS|IRON_HORSE_ARMOR|CHAINMAIL_HELMET|CHAINMAIL_CHESTPLATE|CHAINMAIL_LEGGINGS|CHAINMAIL_BOOTS
+    result: IRON_NUGGET
+    amount: 1
+    experience: 0.1
+    cooking_time: 200
+    category: MISC
