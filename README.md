@@ -19,7 +19,7 @@ In addition, you can switch vanilla recipes at your discretion, as well as disab
 
 ## Support
 
-For any questions or support join the [Discord](https://discord.gg/ChTjgTqw3T)
+For any questions or support join the [Discord](https://discord.gg/acpkr9EUvQ)
 
 ![Discord](https://img.shields.io/discord/1381214323220938924?color=5865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge)
 
